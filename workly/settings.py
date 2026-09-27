@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-p63s74iju^h1*ane*_dj)e%8eb16wmltizqsbz7z(@iz(@uofn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["workly-w2py.onrender.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -119,14 +119,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'mustved12@gmail.com'
-EMAIL_HOST_PASSWORD = 'huuh ciqe fmoh bkfm'
+EMAIL_HOST_USER = 'mohdfarhan098ali@gmail.com'
+EMAIL_HOST_PASSWORD = os.getenv("wjwt phxy bitq gvzu")
 EMAIL_PORT = 587
 """
-huuh ciqe fmoh bkfm
+wjwt phxy bitq gvzu
 """
