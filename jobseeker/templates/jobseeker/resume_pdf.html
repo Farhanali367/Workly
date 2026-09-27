@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Resume</title>
+
+    <style>
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .section-title {
+            color: #0d6efd;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+
+        .skill-box {
+            background: #f5f5f5;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="text-align:center;">
+        <h1>{{ rid.full_name }}</h1>
+
+        <p>
+           &#128236; {{ rid.email }}
+            |
+           📞 {{ rid.number }}
+            |
+           📍 {{ rid.location }}
+        </p>
+
+        <p>
+           🔗 {{ rid.linkedin }}
+            |
+           🌐 {{ rid.pot_web }}
+        </p>
+    </div>
+
+    <h3 class="section-title">Professional Summary</h3>
+    <p>{{ rid.summary }}</p>
+
+    <h3 class="section-title">Education</h3>
+
+    <strong>{{ rid.degree }}</strong><br>
+    {{ rid.Institute }}<br><br>
+
+    Passing Year: {{ rid.p_year }}<br>
+    Percentage: {{ rid.percentage }}%
+
+    {% if rid.job_tital %}
+    <h3 class="section-title">Work Experience</h3>
+
+    <strong>{{ rid.job_tital }}</strong><br>
+    {{ rid.w_company_name }}
+
+    <p>{{ rid.job_description }}</p>
+    {% endif %}
+
+    <h3 class="section-title">Skills</h3>
+
+    <div class="skill-box">
+        {{ rid.skills }}
+    </div>
+
+    <h3 class="section-title">Projects</h3>
+
+    <p>{{ rid.Project_detail }}</p>
+
+    <h3 class="section-title">Languages</h3>
+
+    <div class="skill-box">
+        {{ rid.Language }}
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,163 @@
+{% extends 'jobseeker/dashboard.html' %}
+
+{% block css %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'jobseeker/css/resume-build.css' %}">
+{% endblock %}
+{% block maincontent %}
+{% load static %}
+<div class="resume-wrapper">
+    <a href="javascript:history.back()" class="back-btn">
+        <i class="bi bi-arrow-left"></i> Back
+    </a>
+
+    <div class="resume-card">
+
+        <div class="resume-header">
+            <h2 class="mb-1">Resume Builder</h2>
+            <p class="mb-0">Create Your Professional Resume</p>
+        </div>
+
+        <form method="post" action="{% url 'jobseeker:resume_build' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Personal Information -->
+            <h5 class="section-title">Personal Information</h5>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Full Name</label>
+                    <input type="text" class="form-control" name="full_name" value="{% if rid.full_name %}{{rid.full_name}}{% else %}{{jid.f_name}}{{' '}}{{jid.l_name}}{% endif %} " required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Email Address</label>
+                    <input type="email" class="form-control" name="email" value="{{rid.email|default:jid.user_fk.email}}" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Phone Number</label>
+                    <input type="text" class="form-control" name="number" value="{{rid.number|default:jid.number}}" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Location</label>
+                    <input type="text" class="form-control" name="location" value="{{rid.location|default:jid.location}}" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>LinkedIn Profile</label>
+                    <input type="url" class="form-control" name="linkedin" value="{{rid.linkedin|default:''}}" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Portfolio Website</label>
+                    <input type="url" class="form-control" name="pot_web" value="{{rid.pot_web|default:jid.web}}" required>
+                </div>
+            </div>
+
+            <!-- Summary -->
+
+            <h5 class="section-title">Professional Summary</h5>
+
+            <div class="mb-4">
+                <textarea class="form-control" rows="4"
+                    placeholder="Write your professional summary..." name="summary" required>{{rid.summary|default:''}}</textarea>
+            </div>
+
+            <!-- Education -->
+
+            <h5 class="section-title">Education</h5>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" placeholder="Degree" name="degree" value="{{rid.degree|default:jid.degree}}" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" placeholder="University" name="Institute" value="{{rid.Institute|default:jid.Institute}}" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input type="number" min="" class="form-control" placeholder="Passing Year" name="p_year" value="{{rid.p_year|default:jid.e_year}}" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" placeholder="CGPA / Percentage" name="percentage" value="{{rid.percentage|default:jid.percentage}}" required>
+                </div>
+            </div>
+
+            <!-- Experience -->
+
+            <h5 class="section-title">Work Experience</h5>
+
+            <div class="mb-3">
+                <input type="text" class="form-control mb-2"
+                    placeholder="Job Title" name="job_tital" value="{{rid.job_tital|default:''}}">
+
+                <input type="text" class="form-control mb-2"
+                    placeholder="Company Name" name="w_company_name" value="{{rid.w_company_name|default:''}}">
+
+                <textarea class="form-control"
+                    rows="4"
+                    placeholder="Job Description" name="job_description">{{rid.job_description|default:''}}</textarea>
+            </div>
+
+            <!-- Skills -->
+
+            <h5 class="section-title">Skills</h5>
+
+            <textarea class="form-control mb-4"
+                rows="3"
+                placeholder="Python, Django, JavaScript, Bootstrap" name="skills" required>{{rid.skills|default:jid.skills}}</textarea>
+
+            <!-- Projects -->
+
+            <h5 class="section-title">Projects</h5>
+
+            <textarea class="form-control mb-4"
+                rows="4"
+                placeholder="Project Details" name="Project_detail" required>{{rid.Project_detail|default:''}}</textarea>
+
+            <!-- Certifications -->
+
+            <h5 class="section-title">Certifications</h5>
+
+            <textarea class="form-control mb-4"
+                rows="3"
+                placeholder="Certification Details" name="degree" required>{{rid.degree|default:jid.degree}}</textarea>
+
+            <!-- Languages -->
+
+            <h5 class="section-title">Languages</h5>
+
+            <input type="text"
+                class="form-control mb-4"
+                placeholder="English, Hindi, Gujarati" name="Language" value="{{rid.Language|default:''}}" required>
+
+            <h5 class="section-title">Upload Existing Resume</h5>
+
+            <div class="upload-box mb-4">
+                <input type="file" class="form-control" name="resume" value="{{rid.resume|default:''}}">
+                <small class="text-muted">
+                    Upload PDF, DOC or DOCX Resume
+                </small>
+            </div>
+            <!-- Buttons -->
+
+            <div class="text-center mt-4">
+                <input type="submit" class="btn btn-primary px-5" value="Save Resume">
+                <button type="reset"
+                    class="btn btn-outline-secondary px-5 ms-2">
+                    Reset
+                </button>
+            </div>
+
+        </form>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

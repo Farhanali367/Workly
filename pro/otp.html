@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #040518; display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+
+    <div style="background-color: #0E1043; border-radius: 16px; padding: 40px; width: 90%; max-width: 420px; box-shadow: 0 8px 32px rgba(21, 36, 119, 0.4); border: 1px solid #162477;">
+        
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #EEE9F6; margin: 0 0 10px 0; font-size: 28px; font-weight: 600;">OTP Verification</h1>
+            <p style="color: #B0C5EC; margin: 0; font-size: 14px; line-height: 1.5;">नमस्ते! हमने आपके फोन पर एक OTP भेजा है। कृपया निम्नलिखित में 6-अंकीय कोड दर्ज करें।</p>
+        </div>
+
+        <!-- OTP Input Fields -->
+        <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 30px;">
+            <input type="text" maxlength="1" style="width: 48px; height: 56px; text-align: center; font-size: 24px; font-weight: bold; color: #244AB4; background-color: #162477; border: 2px solid #33225F; border-radius: 10px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='#244AB4'; this.style.boxShadow='0 0 12px #244AB4'" onblur="this.style.borderColor='#33225F'; this.style.boxShadow='none'">
+            <input type="text" maxlength="1" style="width: 48px; height: 56px; text-align: center; font-size: 24px; font-weight: bold; color: #244AB4; background-color: #162477; border: 2px solid #33225F; border-radius: 10px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='#244AB4'; this.style.boxShadow='0 0 12px #244AB4'" onblur="this.style.borderColor='#33225F'; this.style.boxShadow='none'">
+            <input type="text" maxlength="1" style="width: 48px; height: 56px; text-align: center; font-size: 24px; font-weight: bold; color: #244AB4; background-color: #162477; border: 2px solid #33225F; border-radius: 10px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='#244AB4'; this.style.boxShadow='0 0 12px #244AB4'" onblur="this.style.borderColor='#33225F'; this.style.boxShadow='none'">
+            <input type="text" maxlength="1" style="width: 48px; height: 56px; text-align: center; font-size: 24px; font-weight: bold; color: #244AB4; background-color: #162477; border: 2px solid #33225F; border-radius: 10px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='#244AB4'; this.style.boxShadow='0 0 12px #244AB4'" onblur="this.style.borderColor='#33225F'; this.style.boxShadow='none'">
+            <input type="text" maxlength="1" style="width: 48px; height: 56px; text-align: center; font-size: 24px; font-weight: bold; color: #244AB4; background-color: #162477; border: 2px solid #33225F; border-radius: 10px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='#244AB4'; this.style.boxShadow='0 0 12px #244AB4'" onblur="this.style.borderColor='#33225F'; this.style.boxShadow='none'">
+            <input type="text" maxlength="1" style="width: 48px; height: 56px; text-align: center; font-size: 24px; font-weight: bold; color: #244AB4; background-color: #162477; border: 2px solid #33225F; border-radius: 10px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='#244AB4'; this.style.boxShadow='0 0 12px #244AB4'" onblur="this.style.borderColor='#33225F'; this.style.boxShadow='none'">
+        </div>
+
+        <!-- Verify Button -->
+        <button style="width: 100%; padding: 16px; background-color: #244AB4; color: #EEE9F6; font-size: 16px; font-weight: 600; border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(36, 74, 180, 0.4);" onmouseover="this.style.backgroundColor='#1E99E5'; this.style.boxShadow='0 6px 20px rgba(30, 153, 229, 0.5)'" onmouseout="this.style.backgroundColor='#244AB4'; this.style.boxShadow='0 4px 15px rgba(36, 74, 180, 0.4)'" onclick="alert('OTP Verified!')">
+            Verify OTP
+        </button>
+
+        <!-- Secondary Options -->
+        <div style="text-align: center; margin-top: 24px;">
+            <p style="color: #B0C5EC; margin: 0 0 12px 0; font-size: 13px;">
+                कोड नहीं मिला? <a href="#" style="color: #1E99E5; text-decoration: none; font-weight: 600;" onmouseover="this.style.color='#5DA0DF'" onmouseout="this.style.color='#1E99E5'">पुनः भेजें</a>
+            </p>
+            <p style="color: #7A5CA7; margin: 0; font-size: 12px;">
+                30 सेकंड में OTP स्वतः पैदा होगा
+            </p>
+        </div>
+
+    </div>
+
+    <!-- Auto-focus script for OTP inputs -->
+    <script>
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

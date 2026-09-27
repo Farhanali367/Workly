@@ -1,0 +1,75 @@
+body{
+    background:#eef4ff;
+    font-family:'Segoe UI',sans-serif;
+}
+
+.resume-wrapper{
+    margin-left:22%;
+    width:75%;
+    padding:30px;
+}
+
+.resume-card{
+    background:#ffffff;
+    border-radius:24px;
+    padding:40px;
+    box-shadow:0 15px 40px rgba(79,124,255,0.10);
+    border:1px solid #e8eeff;
+}
+
+.section-title{
+    color:#4f7cff;
+    background:#f2f6ff;
+    padding:10px 15px;
+    border-radius:10px;
+    margin-top:30px;
+    margin-bottom:20px;
+    font-weight:600;
+}
+
+.form-control{
+    border:1px solid #d9e4ff;
+    border-radius:12px;
+    padding:12px;
+    background:#fcfdff;
+}
+
+.form-control:focus{
+    border-color:#6c8dff;
+    box-shadow:0 0 0 0.2rem rgba(108,141,255,0.15);
+}
+
+.btn-save{
+    background:#4f7cff;
+    border:none;
+    padding:12px 30px;
+    border-radius:12px;
+}
+
+.btn-save:hover{
+    background:#3d68e8;
+}
+
+.upload-box{
+    background:#f7faff;
+    border:2px dashed #b9ccff;
+    border-radius:15px;
+    padding:25px;
+    text-align:center;
+}
+
+.resume-header{
+    background:linear-gradient(135deg,#5b7fff,#8db1ff);
+    color:white;
+    padding:30px;
+    border-radius:18px;
+    margin-bottom:30px;
+}
+
+@media(max-width:992px){
+    .resume-wrapper{
+        margin-left:0;
+        width:100%;
+        padding:15px;
+    }
+}

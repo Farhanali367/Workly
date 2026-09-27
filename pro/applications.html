@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications - SkillBridge</title>
+    <!-- Include Bootstrap, CSS, etc. -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        body { padding-top: 0; background-color: var(--bg-main); }
+        .sidebar {
+            width: 280px; height: 100vh; position: fixed; top: 0; left: 0;
+            background: #fff; border-right: 1px solid var(--border-color); z-index: 1000; overflow-y: auto;
+        }
+        .main-content { margin-left: 280px; padding: 2rem; min-height: 100vh; }
+        .nav-link-sidebar {
+            color: var(--text-muted); padding: 0.75rem 1.25rem; border-radius: var(--border-radius-md);
+            margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.75rem; font-weight: 500; text-decoration: none;
+        }
+        .nav-link-sidebar:hover { background-color: var(--bg-main); color: var(--primary-color); }
+        .nav-link-sidebar.active { background-color: rgba(10, 102, 194, 0.1); color: var(--primary-color); font-weight: 600; }
+        @media (max-width: 992px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 1rem; }
+        }
+
+        /* Timeline steps */
+        .timeline-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            margin: 2rem 0;
+        }
+        .timeline-steps::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+        .step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 80px;
+        }
+        .step-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid var(--border-color);
+            margin: 0 auto 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step.active .step-icon {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+        }
+        .step.active .step-icon i { color: #fff; font-size: 0.75rem; }
+        
+        .step.completed .step-icon {
+            border-color: var(--accent-color);
+            background: var(--accent-color);
+        }
+        .step.completed .step-icon i { color: #fff; font-size: 0.75rem; }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .step.active .step-label { color: var(--primary-color); font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar placeholder (omitted identical structure) -->
+    <div class="sidebar d-none d-lg-flex flex-column" id="sidebar">
+        <div class="p-4 d-flex align-items-center justify-content-between border-bottom">
+            <a class="navbar-brand fs-4 mb-0 fw-bold d-flex align-items-center gap-2" href="../index.html"><i class="bi bi-briefcase-fill text-primary"></i> SkillBridge</a>
+        </div>
+        <div class="p-3 flex-grow-1">
+            <a href="dashboard.html" class="nav-link-sidebar"><i class="bi bi-grid-1x2"></i> Dashboard</a>
+            <a href="profile.html" class="nav-link-sidebar"><i class="bi bi-person-badge"></i> My Profile</a>
+            <a href="applications.html" class="nav-link-sidebar active"><i class="bi bi-send"></i> Applications</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-end mb-4 slide-up">
+            <div>
+                <h3 class="fw-bold mb-1">My Applications</h3>
+                <p class="text-muted mb-0">Track the status of your job applications</p>
+            </div>
+            <!-- Filter Dropdown -->
+            <select class="form-select w-auto border-0 shadow-sm bg-white fw-medium">
+                <option>All Applications (12)</option>
+                <option>Active (4)</option>
+                <option>Closed (8)</option>
+            </select>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-12 slide-up delay-100">
+                
+                <!-- Application Card 1 -->
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div class="d-flex gap-3">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Company Logo" class="border p-2 rounded" style="width: 50px; height: 50px; object-fit: contain;">
+                                <div>
+                                    <h5 class="fw-bold mb-1">Frontend Architect</h5>
+                                    <div class="text-dark fw-medium text-sm">Amazon • Seattle, WA (Remote)</div>
+                                    <div class="text-muted text-sm mt-1">Applied: Yesterday</div>
+                                </div>
+                            </div>
+                            <span class="badge bg-primary bg-opacity-10 text-primary py-2 px-3 rounded-pill fw-medium border border-primary border-opacity-25">Interview Scheduled</span>
+                        </div>
+                        
+                        <!-- Timeline Tracker -->
+                        <div class="timeline-steps px-md-5">
+                            <div class="step completed">
+                                <div class="step-icon"><i class="bi bi-check2"></i></div>
+                                <div class="step-label">Applied</div>
+                            </div>
+                            <div class="step completed">
+                                <div class="step-icon"><i class="bi bi-check2"></i></div>
+                                <div class="step-label">Reviewed</div>
+                            </div>
+                            <div class="step completed">
+                                <div class="step-icon"><i class="bi bi-check2"></i></div>
+                                <div class="step-label">Shortlisted</div>
+                            </div>
+                            <div class="step active">
+                                <div class="step-icon"></div>
+                                <div class="step-label">Interview</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon"></div>
+                                <div class="step-label">Selected</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-light p-3 rounded d-flex justify-content-between border mt-4">
+                            <div>
+                                <h6 class="fw-bold text-sm mb-1">Next Action Required</h6>
+                                <p class="text-sm text-muted mb-0">Technical Interview scheduled for tomorrow at 10:00 AM PST via Zoom.</p>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm align-self-center rounded-pill px-3">Join Meeting</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Application Card 2 -->
+                <div class="card border-0 shadow-sm mb-3 opacity-75">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div class="d-flex gap-3">
+                                <div class="bg-dark text-white d-flex align-items-center justify-content-center fw-bold fs-4 rounded" style="width: 50px; height: 50px;">S</div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Senior React Developer</h5>
+                                    <div class="text-dark fw-medium text-sm">Stripe • San Francisco, CA</div>
+                                    <div class="text-muted text-sm mt-1">Applied: 2 weeks ago</div>
+                                </div>
+                            </div>
+                            <span class="badge bg-danger bg-opacity-10 text-danger py-2 px-3 rounded-pill fw-medium border border-danger border-opacity-25">Not Selected</span>
+                        </div>
+                        
+                        <div class="timeline-steps px-md-5">
+                            <div class="step completed">
+                                <div class="step-icon"><i class="bi bi-check2"></i></div>
+                                <div class="step-label">Applied</div>
+                            </div>
+                            <div class="step completed">
+                                <div class="step-icon"><i class="bi bi-check2"></i></div>
+                                <div class="step-label">Reviewed</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon" style="background:#dc3545; border-color:#dc3545;"><i class="bi bi-x"></i></div>
+                                <div class="step-label text-danger">Rejected</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon"></div>
+                                <div class="step-label">Interview</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon"></div>
+                                <div class="step-label">Selected</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Application Card 3 -->
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div class="d-flex gap-3">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Company Logo" class="border p-2 rounded" style="width: 50px; height: 50px; object-fit: contain;">
+                                <div>
+                                    <h5 class="fw-bold mb-1">UI Engineer</h5>
+                                    <div class="text-dark fw-medium text-sm">Microsoft • Seattle, WA</div>
+                                    <div class="text-muted text-sm mt-1">Applied: 3 days ago</div>
+                                </div>
+                            </div>
+                            <span class="badge bg-warning bg-opacity-10 text-warning text-dark py-2 px-3 rounded-pill fw-medium border border-warning border-opacity-25">Under Review</span>
+                        </div>
+                        
+                        <div class="timeline-steps px-md-5">
+                            <div class="step completed">
+                                <div class="step-icon"><i class="bi bi-check2"></i></div>
+                                <div class="step-label">Applied</div>
+                            </div>
+                            <div class="step active">
+                                <div class="step-icon"></div>
+                                <div class="step-label text-warning">Reviewed</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon"></div>
+                                <div class="step-label">Shortlisted</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon"></div>
+                                <div class="step-label">Interview</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon"></div>
+                                <div class="step-label">Selected</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/jobseeker.js"></script>
+</body>
+</html>

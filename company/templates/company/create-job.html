@@ -1,0 +1,99 @@
+{% extends 'company/dashboard.html' %}
+{% block main %}
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar Mobile -->
+        <div class="mobile-topbar d-lg-none">
+            <a class="sidebar-brand text-decoration-none fw-bold text-dark" href="#">
+                <i class="bi bi-briefcase-fill text-primary"></i> SkillBridge
+            </a>
+            <button class="menu-toggle text-dark border-secondary" id="openSidebar"><i class="bi bi-list"></i></button>
+        </div>
+
+        <div class="dash-topbar slide-up">
+            <div class="dash-greeting">
+                <h3 class="fw-bold mb-1 text-dark">Create a New Job Opening</h3>
+                <p class="text-muted mb-0">Outline roles, requirements, and set hiring criteria parameters.</p>
+            </div>
+            <a href="{% url 'company:jobs' %}" class="btn btn-outline-primary rounded-pill"><i class="bi bi-arrow-left"></i> Back to Jobs</a>
+        </div>
+
+        <!-- Form Card -->
+        <div class="card border-0 shadow-sm p-4 slide-up delay-100">
+            <form class="needs-validation" novalidate data-redirect="jobs.html" action="{% url 'company:create_jobs' %}" method="post">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="jobTitle" class="form-label">Job Title</label>
+                        <input type="text" class="form-control" id="jobTitle" name="job_title" placeholder="e.g., Senior Frontend Architect" required>
+                        <div class="invalid-feedback">Job title is required.</div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="jobDept" class="form-label">Department</label>
+                        <select class="form-select" id="jobDept" required name="dip_name">
+                            <option  selected disabled>Choose ...</option>
+                            {% for d in d_all %}
+                            <option value="{{d.d_name}}">{{ d.d_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="invalid-feedback">Please select a department.</div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="jobType" class="form-label">Employment Type</label>
+                        <select class="form-select" id="jobType" name="employment_type" required>
+                            <option selected disabled>Choose...</option>
+                            <option value="Full-time">Full-time</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Internship">Internship</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="jobLoc" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="jobLoc" name="location" placeholder="e.g., San Francisco, CA or Remote" required>
+                        <div class="invalid-feedback">Location is required.</div>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="jobSalary" class="form-label">Minimum Salary</label>
+                        <input type="number" class="form-control" id="jobSalary" name="min_salary" placeholder="23000" required min="0">
+                        <div class="invalid-feedback">Salary range is required.</div>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="jobSalary" class="form-label">Maximum Salary</label>
+                        <input type="number" class="form-control" id="jobSalary" name="max_salary" placeholder="60000" required min="0">
+                        <div class="invalid-feedback">Salary range is required.</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="jobExp" class="form-label">Experience Level</label>
+                        <select class="form-select" id="jobExp" name="experience" required>
+                            <option selected disabled>Choose...</option>
+                            <option value="Junior (1-3 yrs)">Junior (1-3 yrs)</option>
+                            <option value="Mid-level (3-5 yrs)">Mid-level (3-5 yrs)</option>
+                            <option value="Senior (5+ yrs)">Senior (5+ yrs)</option>
+                            <option value="Lead/Architect (8+ yrs)">Lead / Architect (8+ yrs)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="jobCriteria" class="form-label">Hiring Criteria / Key Skills (Comma separated)</label>
+                        <input type="text" class="form-control" id="jobCriteria" placeholder="e.g., React, TypeScript, GraphQL, CI/CD" name="key_skils" required>
+                        <div class="invalid-feedback">Please specify key skills required.</div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="jobDesc" class="form-label">Job Description</label>
+                        <textarea class="form-control" id="jobDesc" rows="6" placeholder="Provide a detailed description of responsibilities, requirements, and day-to-day work..." name="job_discription" required></textarea>
+                        <div class="invalid-feedback">Job description is required.</div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4 border-top pt-3 border-secondary">
+                    <a href="{% url 'company:create_jobs' %}" class="btn btn-ghost">Cancel</a>
+                    <input type="submit" class="btn btn-primary rounded-pill px-4" value="Post Job Opening">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

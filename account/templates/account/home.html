@@ -1,0 +1,244 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillBridge - Modern Professional Networking & Recruitment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'account/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'account/css/components.css' %}">
+    <link rel="stylesheet" href="{% static 'account/css/dark-mode.css' %}">
+</head>
+<body class="bg-mesh pb-5">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-glass">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-briefcase-fill text-primary"></i> SkillBridge
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center gap-2">
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'account:home' %}"><i class="bi bi-house-door"></i>Home</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="guest/browse-jobs.html"><i class="bi bi-search"></i>Jobs</a></li> -->
+                    <li class="nav-item"><a class="nav-link" href="{% url 'account:gestcompny' %}"><i class="bi bi-building"></i>Companies</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="guest/browse-candidates.html"><i class="bi bi-people"></i>Candidates</a></li>
+                    <li class="nav-item"><a class="nav-link" href="guest/pricing.html"><i class="bi bi-tag"></i>Pricing</a></li> -->
+                    <!-- <li class="nav-item d-none d-lg-block"><div class="vr h-100 mx-2 text-muted"></div></li> -->
+                    <!-- Theme Toggle -->
+                    <!-- <li class="nav-item">
+                        <button class="btn btn-ghost btn-icon theme-toggle text-secondary" title="Toggle Theme">
+                            <i class="bi bi-moon-fill"></i>
+                        </button>
+                    </li> -->
+                    <li class="nav-item mt-2 mt-lg-0"><a class="btn btn-outline-primary px-3" href="{% url 'account:login' %}">Sign In</a></li>
+                    <li class="nav-item mt-2 mt-lg-0"><a class="btn btn-primary px-3" href="{% url 'account:register' %}">Join Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-hero py-5 text-white text-center d-flex align-items-center justify-content-center" style="min-height: 500px; margin-top: -64px;">
+        <div class="container mt-5 pt-3 position-relative z-base">
+            <span class="badge bg-white text-primary mb-3 px-3 py-2 fw-semibold rounded-pill slide-up">🚀 The Smart Way to Hire & Get Hired</span>
+            <h1 class="display-4 fw-extra-bold letter-spacing-tight mb-3 slide-up delay-100 text-white">Connect, Discover & Grow Your Career</h1>
+            <p class="lead text-white-50 max-width-600 mx-auto mb-4 slide-up delay-200">Find matching career roles, connect with top-tier professional profiles, and leverage enterprise recruitment automation.</p>
+            
+            <!-- Hero Search Form -->
+            <form action="guest/browse-jobs.html" method="GET" class="hero-search-wrapper p-2 bg-white rounded-pill border d-flex flex-column flex-md-row gap-2 slide-up delay-300">
+                <div class="d-flex align-items-center flex-grow-1 px-3">
+                    <i class="bi bi-search text-muted"></i>
+                    <input type="text" name="query" class="form-control border-0 shadow-none bg-transparent" placeholder="Job title, key skills, or recruiter">
+                </div>
+                <div class="divider d-none d-md-block"></div>
+                <div class="d-flex align-items-center flex-grow-1 px-3">
+                    <i class="bi bi-geo-alt text-muted"></i>
+                    <input type="text" name="location" class="form-control border-0 shadow-none bg-transparent" placeholder="Location, Remote, or Hybrid">
+                </div>
+                <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 mt-2 mt-md-0 d-flex align-items-center gap-2 m-1">
+                    Search Jobs
+                </button>
+            </form>
+        </div>
+    </div>
+{% block mainconten %}
+    <!-- Quick Navigation Hub -->
+    <div class="container mt-5">
+        <div class="card border-0 shadow-sm p-4 glass-strong">
+            <h5 class="fw-bold mb-3"><i class="bi bi-grid-fill text-primary"></i> Module Navigation Hub</h5>
+            <p class="text-muted">Use this quick navigation area to inspect and jump directly to each role's workflow pages and dashboard portals.</p>
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <div class="card card-hover h-100 p-3">
+                        <h6 class="fw-bold"><i class="bi bi-globe text-primary"></i> Guest & Auth</h6>
+                        <ul class="list-unstyled text-sm mb-0">
+                            <li><a href="guest/about.html">About Us</a></li>
+                            <li><a href="guest/contact.html">Contact Us</a></li>
+                            <li><a href="guest/browse-jobs.html">Browse Jobs</a></li>
+                            <li><a href="guest/companies.html">Browse Companies</a></li>
+                            <li><a href="guest/browse-candidates.html">Browse Candidates</a></li>
+                            <li><a href="guest/pricing.html">Subscription Pricing</a></li>
+                            <li><a href="guest/login.html">Login Portal</a></li>
+                            <li><a href="guest/register.html">Registration</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="card card-hover h-100 p-3">
+                        <h6 class="fw-bold"><i class="bi bi-person text-success"></i> Job Seeker Portal</h6>
+                        <ul class="list-unstyled text-sm mb-0">
+                            <li><a href="jobseeker/dashboard.html">Candidate Dashboard</a></li>
+                            <li><a href="jobseeker/profile.html">View Profile</a></li>
+                            <li><a href="jobseeker/edit-profile.html">Edit Profile Details</a></li>
+                            <li><a href="jobseeker/resume-builder.html">AI Resume Builder</a></li>
+                            <li><a href="jobseeker/applications.html">Job Application Tracker</a></li>
+                            <li><a href="jobseeker/job-search.html">Smart Job Search</a></li>
+                            <li><a href="jobseeker/feed.html">Networking Feed</a></li>
+                            <li><a href="jobseeker/messages.html">Chat / Messages Inbox</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="card card-hover h-100 p-3">
+                        <h6 class="fw-bold"><i class="bi bi-building text-info"></i> Company Admin</h6>
+                        <ul class="list-unstyled text-sm mb-0">
+                            <li><a href="company/dashboard.html">Company Dashboard</a></li>
+                            <li><a href="company/profile.html">Corporate Profile</a></li>
+                            <li><a href="company/edit-profile.html">Edit Profile Details</a></li>
+                            <li><a href="company/recruiters.html">Manage Recruiters</a></li>
+                            <li><a href="company/jobs.html">Job Postings List</a></li>
+                            <li><a href="company/create-job.html">Post a New Job</a></li>
+                            <li><a href="company/applications.html">Hiring Pipelines</a></li>
+                            <li><a href="company/analytics.html">Corporate Analytics</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-hover p-3">
+                        <h6 class="fw-bold"><i class="bi bi-person-workspace text-accent"></i> Recruiter Workspace</h6>
+                        <ul class="list-unstyled text-sm mb-0 d-flex flex-wrap gap-x-4">
+                            <li class="me-4"><a href="recruiter/dashboard.html">Recruiter Dashboard</a></li>
+                            <li class="me-4"><a href="recruiter/assigned-jobs.html">Assigned Job Openings</a></li>
+                            <li class="me-4"><a href="recruiter/candidates.html">Talent Sourcing</a></li>
+                            <li class="me-4"><a href="recruiter/interviews.html">Interview Management</a></li>
+                            <li class="me-4"><a href="recruiter/messages.html">Candidate Messaging</a></li>
+                            <li class="me-4"><a href="recruiter/profile.html">Recruiter Profile</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-hover p-3">
+                        <h6 class="fw-bold"><i class="bi bi-shield-lock-fill text-danger"></i> Super Admin Portal</h6>
+                        <ul class="list-unstyled text-sm mb-0 d-flex flex-wrap gap-x-4">
+                            <li class="me-4"><a href="admin/dashboard.html">Admin Console</a></li>
+                            <li class="me-4"><a href="admin/users.html">User Base Control</a></li>
+                            <li class="me-4"><a href="admin/jobs.html">Job Feed Moderation</a></li>
+                            <li class="me-4"><a href="admin/subscriptions.html">Revenue & Billing</a></li>
+                            <li class="me-4"><a href="admin/cms.html">Content Management</a></li>
+                            <li class="me-4"><a href="admin/audit-logs.html">Security & Audit Logs</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+    <!-- Stats & Categories Section -->
+    <div class="container mt-5">
+        <div class="row g-4 text-center">
+            <div class="col-md-3 col-sm-6">
+                <div class="card border-0 shadow-sm p-4">
+                    <h2 class="fw-extra-bold text-primary mb-1">12M+</h2>
+                    <p class="text-muted mb-0">Active Members</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card border-0 shadow-sm p-4">
+                    <h2 class="fw-extra-bold text-success mb-1">450k+</h2>
+                    <p class="text-muted mb-0">Listed Openings</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card border-0 shadow-sm p-4">
+                    <h2 class="fw-extra-bold text-accent mb-1">85k+</h2>
+                    <p class="text-muted mb-0">Companies Hiring</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card border-0 shadow-sm p-4">
+                    <h2 class="fw-extra-bold text-warning mb-1">$4.2B+</h2>
+                    <p class="text-muted mb-0">Paid in Salaries</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="container mt-5 pt-5 border-top text-muted">
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <h6 class="fw-bold text-dark"><i class="bi bi-briefcase-fill text-primary"></i> SkillBridge</h6>
+                <p class="text-sm">Connecting professionals, enabling recruitments, and accelerating business transformations with next-generation analytics.</p>
+                <div class="d-flex gap-2">
+                    <a href="#" class="btn btn-outline-primary btn-icon btn-icon-sm"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="btn btn-outline-primary btn-icon btn-icon-sm"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" class="btn btn-outline-primary btn-icon btn-icon-sm"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" class="btn btn-outline-primary btn-icon btn-icon-sm"><i class="bi bi-github"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <h6 class="fw-bold text-dark text-sm">Company</h6>
+                <ul class="list-unstyled text-sm">
+                    <li><a href="guest/about.html">About Us</a></li>
+                    <li><a href="guest/careers.html">Careers</a></li>
+                    <li><a href="guest/success-stories.html">Success Stories</a></li>
+                    <li><a href="guest/blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <h6 class="fw-bold text-dark text-sm">Support</h6>
+                <ul class="list-unstyled text-sm">
+                    <li><a href="guest/help-center.html">Help Center</a></li>
+                    <li><a href="guest/faq.html">FAQ</a></li>
+                    <li><a href="guest/contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <h6 class="fw-bold text-dark text-sm">Legal</h6>
+                <ul class="list-unstyled text-sm">
+                    <li><a href="guest/terms.html">Terms of Service</a></li>
+                    <li><a href="guest/privacy.html">Privacy Policy</a></li>
+                    <li><a href="guest/cookie-policy.html">Cookie Policy</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <h6 class="fw-bold text-dark text-sm">Platform Services</h6>
+                <ul class="list-unstyled text-sm">
+                    <li><a href="guest/pricing.html">SaaS Subscriptions</a></li>
+                    <li><a href="guest/browse-candidates.html">Candidate Search</a></li>
+                    <li><a href="guest/browse-jobs.html">Job Search</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top text-sm">
+            <p>&copy; 2026 SkillBridge Inc. All rights reserved.</p>
+            <div class="d-flex gap-3">
+                <a href="guest/privacy.html">Privacy</a>
+                <a href="guest/terms.html">Terms</a>
+                <a href="guest/cookie-policy.html">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core JS -->
+    <script src="{% static 'account/js/main.js' %}"></script>
+</body>
+</html>

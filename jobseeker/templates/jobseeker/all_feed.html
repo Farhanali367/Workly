@@ -1,0 +1,229 @@
+{% extends 'jobseeker/dashboard.html' %}
+{% block css %}
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#f4f7fc;
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* FEED AREA */
+.feed-container{
+    width:70%;
+    margin-left:25%;
+    padding:25px;
+}
+
+/* TOP BAR */
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.page-title{
+    font-size:28px;
+    font-weight:700;
+    color:#222;
+}
+
+.add-btn{
+    background:linear-gradient(135deg,#4f8cff,#70a5ff);
+    color:white;
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:12px;
+    font-weight:600;
+    transition:.3s;
+    box-shadow:0 4px 15px rgba(79,140,255,.25);
+}
+
+.add-btn:hover{
+    color:white;
+    transform:translateY(-2px);
+}
+
+/* CREATE POST CARD */
+.create-post{
+    background:white;
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.create-post input{
+    width:100%;
+    padding:14px 18px;
+    border:1px solid #dde5f2;
+    border-radius:30px;
+    outline:none;
+    background:#fafcff;
+}
+
+.create-post input:focus{
+    border-color:#4f8cff;
+}
+
+/* POST CARD */
+.post-card{
+    background:white;
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+    transition:.3s;
+}
+
+.post-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,.10);
+}
+
+/* USER INFO */
+.user-info{
+    display:flex;
+    align-items:center;
+}
+
+.profile-img{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #eef3ff;
+}
+
+.user-details{
+    margin-left:12px;
+}
+
+.user-details h6{
+    margin:0;
+    font-weight:700;
+    color:#222;
+}
+
+.user-details small{
+    color:#888;
+}
+
+/* POST CONTENT */
+.post-content{
+    margin-top:15px;
+    color:#444;
+    line-height:1.8;
+    font-size:15px;
+}
+
+/* POST IMAGE */
+.post-image{
+    width:100%;
+    border-radius:15px;
+    margin-top:15px;
+}
+
+/* ACTIONS */
+.post-actions{
+    display:flex;
+    justify-content:space-around;
+    margin-top:15px;
+    padding-top:15px;
+    border-top:1px solid #edf1f7;
+}
+
+.post-actions button{
+    border:none;
+    background:none;
+    padding:10px 18px;
+    border-radius:10px;
+    font-weight:600;
+    color:#666;
+    transition:.3s;
+}
+
+.post-actions button:hover{
+    background:#f3f7ff;
+    color:#4f8cff;
+}
+
+/* MOBILE */
+@media(max-width:992px){
+
+    .feed-container{
+        width:95%;
+        margin:auto;
+    }
+
+    .top-bar{
+        flex-direction:column;
+        gap:15px;
+    }
+}
+
+</style>
+
+{% endblock %}
+
+{% block maincontent %}
+
+<div class="feed-container">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="page-title">
+            Community Feed
+        </div>
+
+        <a href="{% url 'jobseeker:add_post' %}" class="add-btn">
+            + Add Post
+        </a>
+    </div>
+{% for i in pid %}
+    <!-- POST 1 -->
+    <div class="post-card">
+
+        <div class="user-info">
+
+            <img
+            src="{{i.job_fk.profile_pic.url}}"
+            class="profile-img">
+
+            <div class="user-details">
+                <h6>{{i.job_fk.f_name|default:''}}{{' '}}{{i.job_fk.l_name|default:''}}</h6>
+                <small> {{ i.whenpublished }}</small>
+            </div>
+
+        </div>
+        {% if i.tital %}
+        <h4>{{''}}{{i.tital}}{% if i.description %}{{':'}}{% endif %}</h4>
+        {% endif %}
+    {% if i.description %}
+        <div class="post-content"style="padding-left:20px;">
+            {{i.description}}
+        </div>
+    {% endif %}
+    {% if i.image == '' %}
+    {% else %}
+        <img
+        src="{{i.image.url}}"
+        class="post-image">
+
+        <div class="post-actions">
+            <button>👍 Like</button>
+            <button>💬 Comment</button>
+            <button>🔁 Share</button>
+        </div>
+    {% endif %}
+    </div>
+{% endfor %}
+</div>
+
+{% endblock %}

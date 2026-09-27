@@ -1,0 +1,114 @@
+{% extends 'jobseeker/dashboard.html' %}
+{% block css %}
+    <style>
+        :root {
+            --primary-color: #0A66C2;
+            --bg-main: #F3F2EF;
+        }
+        body { padding-top: 0; background-color: var(--bg-main); }
+        .sidebar {
+            width: 280px; height: 100vh; position: fixed; top: 0; left: 0;
+            background: #fff; border-right: 1px solid var(--border-light); z-index: 1000; overflow-y: auto;
+        }
+        .main-content { margin-left: 280px; padding: 1.5rem; min-height: 100vh; }
+        .nav-link-sidebar {
+            color: #666; padding: 0.75rem 1.25rem; border-radius: var(--radius-md);
+            margin: 0.25rem 1rem; display: flex; align-items: center; gap: 0.75rem; font-weight: 500; text-decoration: none;
+            transition: all 0.2s;
+        }
+        .nav-link-sidebar:hover, .nav-link-sidebar.active {
+            background-color: var(--bg-active); color: var(--primary);
+        }
+        @media (max-width: 992px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.show { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 1rem; }
+        }
+    </style>
+{% endblock %}
+{% block maincontent %}
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar Mobile -->
+        <div class="d-flex align-items-center justify-content-between mb-4 d-lg-none">
+            <h4 class="fw-bold mb-0">Connections</h4>
+            <button class="btn btn-light border" id="openSidebar"><i class="bi bi-list fs-4"></i></button>
+        </div>
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4 slide-up">
+            <div>
+                <h3 class="fw-bold mb-1">Your Professional Circle</h3>
+                <p class="text-muted mb-0">Grow your connection base and communicate with active recruiters.</p>
+            </div>
+            <div class="bg-white px-3 py-2 border rounded shadow-sm d-flex align-items-center gap-2">
+                <i class="bi bi-people-fill text-primary"></i>
+                <span class="fw-bold text-sm text-dark">Total ({{ all_jobseeker|length }}) Connections</span>
+            </div>
+        </div>
+
+        <!-- Pending Invitations -->
+        <div class="card border-0 shadow-sm mb-4 slide-up delay-100" id="invitationsPanel">
+            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0">Pending Network Invites ({{job_request|length}})</h6>
+            </div>
+            {% for j_r in job_request %}
+            <div class="card-body p-1">
+                <div class="d-flex flex-wrap gap-3 align-items-center p-3 border rounded" id="invite1">
+                    <img src="{{j_r.jid_r_sender.profile_pic.url}}" class="rounded-circle border border-2 border-secondary" style="width: 50px; height: 50px; object-fit: cover;"alt="Profile">
+                    <div>
+                        <h6 class="fw-bold mb-0 text-sm">{{j_r.jid_r_sender}}</h6>
+                        <small class="text-muted text-xs">'Request Sent to You'</small>
+                    </div>
+                    <div class="ms-md-auto d-flex gap-2">
+                        <form action="{% url 'jobseeker:job_accept' pk=j_r.jid_r_sender.id %}" method="post">
+                            {% csrf_token %}
+
+                            <button type="submit" name="status" value="Ignore" class="btn btn-sm btn-outline-secondary">Ignore</button>
+                            <button type="submit" name="status" value="Accept" class="btn btn-sm btn-primary">Accept Invite</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Sourced Directory -->
+        <div class="card border-0 shadow-sm slide-up delay-200">
+            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0">Search Connections</h6>
+                <input type="text" class="form-control form-control-sm" placeholder="Search connections..." style="max-width: 200px;" id="connSearch" oninput="filterConnections()">
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-3" id="connContainer">
+                    <!-- Conn 1 -->
+                    {% for seeker in all_jobseeker%}
+                    <div class="col-md-6 col-lg-4 conn-item">
+                        <div class="border rounded p-3 text-center">
+                            <a href="{{seeker.profile_pic.url}}"><img src="{{seeker.profile_pic.url}}" class="rounded-circle border border-2 border-secondary" style="width: 50px; height: 50px; object-fit: cover;"alt="Profile"></a>
+                            <h6 class="fw-bold mb-0 text-sm">{{seeker.f_name|default:''}}{{' '}}{{seeker.l_name|default:''}}</h6>
+                            <p class="text-muted text-xs mb-1">{{seeker.p_h|default:''}}</p>
+                            <p class="text-muted text-xs mb-1">{{seeker.location|default:''}}</p>
+
+                            <div class="d-flex gap-2 justify-content-center">
+                                <a href="{% url 'jobseeker:job_request' pk=seeker.id %}">
+                                <button type="submit" class="btn btn-sm btn-outline-primary py-1 px-3 w-100 justify-content-center"><i class="bi bi-person-plus-fill me-1"></i> Send Request</button>
+                                </a>
+                            </div>
+                            
+                            <!-- <div class="d-flex gap-2 justify-content-center">
+                                <form action="{% url 'jobseeker:conection' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="pk" value="{{seeker.id}}">
+                                    <button type="submit" class="btn btn-sm btn-outline-primary py-1 px-3 w-100 justify-content-center"><i class="bi-chat-dots-fill me-1"></i> Message</button>
+                                </form>
+                            </div> -->
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

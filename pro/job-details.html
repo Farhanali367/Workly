@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details - SkillBridge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        .back-btn{
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
+            text-decoration: none;
+            color: #0d6efd;
+            background: transparent;
+            border: 1.5px solid #0d6efd;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover{
+            background: #0d6efd;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(13,110,253,.18);
+        }
+    </style>
+</head>
+<body class="bg-main pb-5">
+    <!-- Job Header -->
+     <a href="javascript:history.back()" class="back-btn">
+        <i class="bi bi-arrow-left"></i> Back
+    </a>
+    <div class="bg-white border-bottom position-relative" style="margin-top: -10px;">
+        <div style="height: 250px; overflow: hidden;">
+            <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=2000" class="w-100 object-fit-cover" alt="Company Cover">
+        </div>
+        <div class="container position-relative slide-up">
+            <div class="d-flex flex-column flex-md-row gap-4 align-items-start pb-5" style="margin-top: -50px;">
+                <div class="bg-white rounded-3 shadow-lg p-3 border" style="width: 120px; height: 120px; z-index: 10;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Company Logo" class="w-100 h-100 object-fit-contain">
+                </div>
+                <div class="flex-grow-1 pt-md-5 mt-md-3">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start">
+                        <div>
+                            <h2 class="fw-bold mb-1 text-dark">Frontend Architect</h2>
+                            <div class="text-muted fs-5 mb-2">
+                                <a href="company-profile.html" class="text-decoration-none fw-medium text-primary">Amazon</a>
+                                <i class="bi bi-dot"></i> Seattle, WA (Remote)
+                            </div>
+                            <div class="job-meta">
+                                <span><i class="bi bi-briefcase"></i> Full-time</span>
+                                <span><i class="bi bi-cash"></i> $180,000 / yr + Equity</span>
+                                <span class="text-success"><i class="bi bi-clock-history"></i> Posted 1 day ago</span>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column gap-2 mt-3 mt-md-0">
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm">Apply</button>
+                                <button class="btn btn-outline-secondary btn-lg rounded-circle bookmark-btn position-static" ><i class="bi bi-bookmark"></i></button>
+                            </div>
+                            <small class="text-muted text-end">15 applicants • Actively reviewing</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row g-4">
+            <div class="col-lg-8 slide-up delay-100">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4 p-md-5">
+                        <h4 class="fw-bold mb-4 text-dark">About the Role</h4>
+                        <div class="text-muted" style="line-height: 1.8;">
+                            <p>Amazon's Core Shopping team is seeking an experienced Frontend Architect to help define the next generation of our component ecosystem. This is a rare opportunity to have a massive impact across one of the most heavily trafficked sites in the world.</p>
+                            
+                            <h5 class="fw-bold text-dark mt-5 mb-3">Key Responsibilities</h5>
+                            <ul class="mb-4">
+                                <li>Architect and build scalable, performant, and accessible frontend applications using React and strictly typed TypeScript.</li>
+                                <li>Collaborate across engineering, product, and design organizations to establish technical vision and UI delivery standards.</li>
+                                <li>Identify and address web performance bottlenecks, establishing performance budgets for feature teams.</li>
+                                <li>Mentor senior engineers and provide code reviews for complex architectures.</li>
+                            </ul>
+
+                            <h5 class="fw-bold text-dark mt-5 mb-3">Minimum Qualifications</h5>
+                            <ul class="mb-4">
+                                <li>8+ years of professional software engineering experience.</li>
+                                <li>Deep expertise in JavaScript/TypeScript and modern web frameworks (React, Next.js).</li>
+                                <li>Proven track record of designing highly scalable system architectures.</li>
+                                <li>Strong understanding of web vitals, accessibility (a11y), and state management.</li>
+                            </ul>
+                        </div>
+                        
+                        <hr class="my-5">
+                        <h4 class="fw-bold mb-4 text-dark">Skills Required</h4>
+                        <div class="d-flex flex-wrap gap-2 mb-4">
+                            <span class="badge bg-light text-secondary border px-3 py-2 fs-6">React.js</span>
+                            <span class="badge bg-light text-secondary border px-3 py-2 fs-6">TypeScript</span>
+                            <span class="badge bg-light text-secondary border px-3 py-2 fs-6">Web Performance</span>
+                            <span class="badge bg-light text-secondary border px-3 py-2 fs-6">System Architecture</span>
+                            <span class="badge bg-light text-secondary border px-3 py-2 fs-6">GraphQL</span>
+                            <span class="badge bg-light text-secondary border px-3 py-2 fs-6">Leadership</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4 slide-up delay-200">
+                <!-- Company Info -->
+                <div class="card border-0 shadow-sm mb-4 sticky-top" style="top: 100px;">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center gap-3 mb-4">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Company Logo" class="border p-2 rounded" style="width: 60px; height: 60px; object-fit: contain;">
+                            <div>
+                                <h5 class="fw-bold mb-0 text-dark">Amazon</h5>
+                                <a href="company-profile.html" class="text-decoration-none text-muted">View Company Profile</a>
+                            </div>
+                        </div>
+                        <ul class="list-unstyled text-muted mb-4 d-flex flex-column gap-3">
+                            <li class="d-flex align-items-start gap-3">
+                                <i class="bi bi-building fs-5 text-primary mt-1"></i>
+                                <div>
+                                    <strong class="d-block text-dark">Industry</strong>
+                                    Internet / E-commerce
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-start gap-3">
+                                <i class="bi bi-people fs-5 text-primary mt-1"></i>
+                                <div>
+                                    <strong class="d-block text-dark">Company Size</strong>
+                                    10,001+ employees
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-start gap-3">
+                                <i class="bi bi-link-45deg fs-5 text-primary mt-1"></i>
+                                <div>
+                                    <strong class="d-block text-dark">Website</strong>
+                                    <a href="#" class="text-decoration-none">amazon.jobs</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100 rounded-pill mb-2"><i class="bi bi-plus-lg"></i> Follow</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

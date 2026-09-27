@@ -1,0 +1,110 @@
+{% extends 'company/dashboard.html' %}
+{% block main %}
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar Mobile -->
+        <div class="mobile-topbar d-lg-none">
+            <a class="sidebar-brand text-decoration-none fw-bold text-white" href="#">
+                <i class="bi bi-briefcase-fill text-primary"></i> SkillBridge
+            </a>
+            <button class="menu-toggle text-white border-secondary" id="openSidebar"><i class="bi bi-list"></i></button>
+        </div>
+
+        <div class="dash-topbar slide-up">
+            <div class="dash-greeting">
+                <h3 class="fw-bold mb-1 text-dark">Application Sourcing Card</h3>
+                <p class="text-muted mb-0">Review submission timeline, match evaluation metrics, and transition stage.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="javascript:history.back()"  class="btn btn-outline-primary rounded-pill"><i class="bi bi-arrow-left"></i> Sourcing Pipeline</a>
+            </div>
+        </div>
+
+        <!-- Application evaluation split -->
+        <div class="row g-4">
+            <div class="col-lg-8 slide-up delay-100">
+                <!-- Candidate profile details header inside application details -->
+                <div class="card border-0 p-4 mb-4 shadow-sm">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <img src="{{ applicant.job_fk.profile_pic.url }}" class="rounded-circle border border-2 border-secondary" style="width: 50px; height: 50px; object-fit: cover;"alt="Profile">
+                        <div>
+                            <h5 class="fw-bold text-dark mb-0">{{applicant.job_fk}}</h5>
+                            <small class="text-muted">Applied for <strong>{{applicant.jobs_fk.job_title}}</strong> &bull; {{applicant.whenpublished}}</small>
+                        </div>
+                        <a href="messages.html"class="ms-auto d-flex align-items-center justify-content-center btn btn-light rounded-circle border"style="width:42px;height:42px;"><i class="bi bi-chat-dots-fill"></i></a>
+                    </div>
+                    <div class="d-flex gap-2 mb-3">
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-20"><i class="bi bi-check-circle-fill"></i> {{applicant.status}}</span>
+                        <span id="currentStageBadge" class="status-badge status-applied">{{applicant.job_fk.location}}</span>
+                        {% if applicant.resume_fk.resume %}
+                        <a href="{{ applicant.resume_fk.resume.url }}" target="_blank"><span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-20"><u><i class="bi bi-search"></i>View Resume</u></span></a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- job-details -->
+                <div class="card border-0 p-4 mb-4 shadow-sm">
+                    <h6 class="fw-bold text-dark mb-3">{{applicant.jobs_fk.job_title}}</h6>
+
+                    <div class="d-flex gap-2 mb-3">
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-20">&#8377; {{applicant.jobs_fk.min_salary}}</span>-
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-20">&#8377; {{applicant.jobs_fk.max_salary}}</span>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="border-bottom pb-2">
+                            <span class="d-block text-muted text-sm fw-semibold mb-1">{{applicant.jobs_fk.department_fk}}</span>
+                            <p class="text-muted text-sm mb-0">"{{applicant.jobs_fk.key_skils}}"</p>
+                        </div>
+                        <div>
+                            <span class="d-block text-dark text-sm fw-semibold mb-1">Description </span>
+                            <p class="text-muted text-sm mb-0">"{{applicant.jobs_fk.job_discription}}"</p>
+                        </div>
+                        <div>
+                            <span class="d-block text-dark text-sm fw-semibold mb-1">Location </span>
+                            <p class="text-muted text-sm mb-0">"{{applicant.jobs_fk.location}}"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pipeline controls card -->
+            <div class="col-lg-4 slide-up delay-200">
+                <div class="card border-0 p-4 mb-4 shadow-sm">
+                    <h6 class="fw-bold text-dark mb-3">Transition Candidate Pipeline</h6><hr>
+                    
+                    <!-- <div class="mb-3">
+                        <label for="stageSelect" class="form-label">Current Hiring Stage</label>
+                        <select class="form-select text-white bg-dark border-secondary" id="stageSelect" onchange="transitionStage()">
+                            <option value="reviewed" selected disabled>Reviewed</option>
+                            <option value="shortlisted">Shortlisted</option>
+                            <option value="interview">Interview Scheduled</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div> -->
+
+                    <div class="d-flex flex-column gap-2">
+                        <form action="{% url 'company:sta_tus' %}" method="post" class="d-flex flex-column gap-2">
+                            {% csrf_token %}
+                            <input type="hidden" name="pk" value="{{applicant.id}}">
+                            <button type="submit" name="Shortlisted" value="Shortlisted" class="btn btn-primary rounded-pill w-100 text-center"><i class="bi bi-person-check-fill"></i> Shortlisted</button>
+                        </form>
+                        <form action="{% url 'company:sta_tus' %}" method="post" class="d-flex flex-column gap-2">
+                            {% csrf_token %}
+                            <input type="hidden" name="pk" value="{{applicant.id}}">
+                            <input type="text" class="form-control" name="e_name" placeholder="Interviewer Name">
+                            <input type="date" class="form-control" name="date" required>
+                            <input type="time" class="form-control" name="time" required>
+                            <button type="submit" name="Interview" value="Interview" class="btn btn-primary rounded-pill w-100 text-center"><i class="bi bi-calendar-event"></i> Schedule Interview</button>
+                        </form>
+                        <form action="{% url 'company:sta_tus' %}" method="post" class="d-flex flex-column gap-2">
+                            {% csrf_token %}
+                            <input type="hidden" name="pk" value="{{applicant.id}}">
+                            <button type="submit" name="Rejected" value="Rejected" class="btn btn-outline-danger rounded-pill w-100 text-center"><i class="bi bi-x-circle-fill me-1"></i> Rejected</button>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

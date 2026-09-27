@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTP Verification</title>
+</head>
+
+<body style="
+margin:0;
+padding:0;
+font-family:'Segoe UI',sans-serif;
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(rgba(4,5,24,.85),rgba(4,5,24,.85)),
+url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1920');
+background-size:cover;
+background-position:center;
+">
+
+<!-- Blue Glow -->
+<div style="
+position:absolute;
+width:600px;
+height:600px;
+background:#1E99E5;
+border-radius:50%;
+filter:blur(200px);
+opacity:.20;
+top:-250px;
+left:-200px;
+"></div>
+
+<!-- Purple Glow -->
+<div style="
+position:absolute;
+width:600px;
+height:600px;
+background:#7A5CA7;
+border-radius:50%;
+filter:blur(200px);
+opacity:.20;
+bottom:-250px;
+right:-200px;
+"></div>
+
+<!-- Top Glow -->
+<div style="
+position:absolute;
+width:350px;
+height:350px;
+background:#244AB4;
+border-radius:50%;
+filter:blur(150px);
+opacity:.15;
+top:20%;
+left:60%;
+"></div>
+
+<!-- OTP Card -->
+<div style="
+width:480px;
+max-width:90%;
+padding:45px;
+border-radius:30px;
+background:rgba(14,16,67,.35);
+backdrop-filter:blur(25px);
+border:1px solid rgba(176,197,236,.2);
+box-shadow:
+0 0 30px rgba(30,153,229,.35),
+0 0 80px rgba(122,92,167,.25);
+position:relative;
+z-index:10;
+text-align:center;
+">
+
+<!-- Logo -->
+<div style="
+width:90px;
+height:90px;
+margin:auto;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+background:linear-gradient(135deg,#244AB4,#1E99E5,#7A5CA7);
+box-shadow:
+0 0 20px #1E99E5,
+0 0 50px rgba(30,153,229,.5);
+">
+🔐
+</div>
+
+<!-- Heading -->
+<h1 style="
+margin-top:25px;
+margin-bottom:10px;
+font-size:38px;
+font-weight:700;
+letter-spacing:3px;
+color:#EEE9F6;
+text-shadow:
+0 0 10px #EEE9F6,
+0 0 30px #1E99E5,
+0 0 50px #1E99E5;
+">
+VERIFY OTP
+</h1>
+
+<!-- Subtitle -->
+<p style="
+color:#B0C5EC;
+font-size:15px;
+line-height:1.8;
+margin-bottom:35px;
+">
+A verification code has been sent to your email address.
+Please enter the code below to continue.
+</p>
+
+<!-- OTP Inputs -->
+<div style="
+display:flex;
+justify-content:center;
+gap:12px;
+margin-bottom:30px;
+">
+
+<input type="text" maxlength="1" style="
+width:60px;
+height:65px;
+border-radius:15px;
+border:1px solid #244AB4;
+background:rgba(4,5,24,.7);
+color:#EEE9F6;
+font-size:24px;
+font-weight:bold;
+text-align:center;
+outline:none;
+box-shadow:0 0 20px rgba(30,153,229,.25);
+">
+
+<input type="text" maxlength="1" style="
+width:60px;
+height:65px;
+border-radius:15px;
+border:1px solid #244AB4;
+background:rgba(4,5,24,.7);
+color:#EEE9F6;
+font-size:24px;
+font-weight:bold;
+text-align:center;
+outline:none;
+box-shadow:0 0 20px rgba(30,153,229,.25);
+">
+
+<input type="text" maxlength="1" style="
+width:60px;
+height:65px;
+border-radius:15px;
+border:1px solid #244AB4;
+background:rgba(4,5,24,.7);
+color:#EEE9F6;
+font-size:24px;
+font-weight:bold;
+text-align:center;
+outline:none;
+box-shadow:0 0 20px rgba(30,153,229,.25);
+">
+
+<input type="text" maxlength="1" style="
+width:60px;
+height:65px;
+border-radius:15px;
+border:1px solid #244AB4;
+background:rgba(4,5,24,.7);
+color:#EEE9F6;
+font-size:24px;
+font-weight:bold;
+text-align:center;
+outline:none;
+box-shadow:0 0 20px rgba(30,153,229,.25);
+">
+
+<input type="text" maxlength="1" style="
+width:60px;
+height:65px;
+border-radius:15px;
+border:1px solid #244AB4;
+background:rgba(4,5,24,.7);
+color:#EEE9F6;
+font-size:24px;
+font-weight:bold;
+text-align:center;
+outline:none;
+box-shadow:0 0 20px rgba(30,153,229,.25);
+">
+
+<input type="text" maxlength="1" style="
+width:60px;
+height:65px;
+border-radius:15px;
+border:1px solid #244AB4;
+background:rgba(4,5,24,.7);
+color:#EEE9F6;
+font-size:24px;
+font-weight:bold;
+text-align:center;
+outline:none;
+box-shadow:0 0 20px rgba(30,153,229,.25);
+">
+
+</div>
+
+<!-- Verify Button -->
+<button style="
+width:100%;
+padding:16px;
+border:none;
+border-radius:15px;
+cursor:pointer;
+font-size:17px;
+font-weight:700;
+letter-spacing:1px;
+color:white;
+background:
+linear-gradient(
+135deg,
+#244AB4,
+#1E99E5,
+#7A5CA7
+);
+box-shadow:
+0 0 25px rgba(30,153,229,.6),
+0 0 50px rgba(122,92,167,.4);
+">
+VERIFY NOW
+</button>
+
+<!-- Timer -->
+<div style="
+margin-top:25px;
+font-size:14px;
+color:#B0C5EC;
+">
+OTP expires in
+<span style="
+color:#1E99E5;
+font-weight:bold;
+">
+02:00
+</span>
+</div>
+
+<!-- Resend -->
+<div style="
+margin-top:20px;
+font-size:14px;
+color:#B0C5EC;
+">
+Didn't receive the code?
+<a href="#" style="
+color:#1E99E5;
+text-decoration:none;
+font-weight:bold;
+">
+Resend OTP
+</a>
+</div>
+
+<!-- Footer -->
+<div style="
+margin-top:35px;
+padding-top:20px;
+border-top:1px solid rgba(176,197,236,.15);
+color:#7A5CA7;
+font-size:12px;
+letter-spacing:1px;
+">
+SECURE VERIFICATION PORTAL
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+
+{% extends 'jobseeker/dashboard.html' %}
+{% block css %}
+   <style>
+        :root {
+            --primary-color: #0A66C2;
+            --bg-main: #F3F2EF;
+        }
+        body { padding-top: 0; background-color: var(--bg-main); }
+        .sidebar {
+            width: 280px; height: 100vh; position: fixed; top: 0; left: 0;
+            background: #fff; border-right: 1px solid var(--border-light); z-index: 1000; overflow-y: auto;
+        }
+        .main-content { margin-left: 280px; padding: 1.5rem; min-height: 100vh; }
+        .nav-link-sidebar {
+            color: #666; padding: 0.75rem 1.25rem; border-radius: var(--radius-md);
+            margin: 0.25rem 1rem; display: flex; align-items: center; gap: 0.75rem; font-weight: 500; text-decoration: none;
+            transition: all 0.2s;
+        }
+        .nav-link-sidebar:hover, .nav-link-sidebar.active {
+            background-color: var(--bg-active); color: var(--primary);
+        }
+        .chat-container {
+            height: 600px;
+            background: #fff;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            border: 1px solid var(--border-light);
+        }
+        .chat-sidebar {
+            width: 320px;
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background: #F8FAFC;
+        }
+        .chat-history {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+        .message-bubble {
+            max-width: 70%;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-lg);
+            margin-bottom: 1rem;
+        }
+        .message-incoming {
+            background: #fff;
+            color: var(--text-primary);
+            align-self: flex-start;
+            border: 1px solid var(--border-light);
+        }
+        .message-outgoing {
+            background: var(--primary-color);
+            color: #fff;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        @media (max-width: 992px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.show { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 1rem; }
+            .chat-container { flex-direction: column; height: auto; }
+            .chat-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border-light); }
+        }
+    </style>
+{% endblock %}
+{% block maincontent %}
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar Mobile -->
+        <div class="d-flex align-items-center justify-content-between mb-4 d-lg-none">
+            <h4 class="fw-bold mb-0">Messages</h4>
+            <button class="btn btn-light border" id="openSidebar"><i class="bi bi-list fs-4"></i></button>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="chat-container shadow-sm slide-up">
+            
+            <!-- Chat Sidebar -->
+            <div class="chat-sidebar bg-white">
+                <div class="p-3 border-bottom">
+                    <input type="text" class="form-control form-control-sm" placeholder="Search conversations...">
+                </div>
+                <div class="list-group list-group-flush flex-grow-1 overflow-y-auto gap-1">
+                    <!-- Item 1 (Selected) -->
+                    {% for f in friends %} 
+                    <a href="#" class="list-group-item list-group-item-action p-3 border-bottom bg-light border-0">
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="{{f.jid_r_sender.profile_pic.url}}" class="rounded-circle border border-2 border-secondary" style="width: 40px; height: 40px; object-fit: cover;"alt="Profile">
+                            <div class="flex-grow-1 overflow-hidden">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="mb-1 fw-bold text-sm text-dark">{{f.jid_r_sender.f_name}}</h6>
+                                    <small class="text-muted">10m ago</small>
+                                </div>
+                                <p class="text-muted text-xs mb-0 text-truncate">We have slots open on Wednesday, June 10 at 10:00 AM.</p>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <!-- Chat Header -->
+                <div class="bg-white border-bottom p-3 d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="https://ui-avatars.com/api/?name=Sarah+Jenkins&background=7C3AED&color=fff" class="rounded-circle" width="40">
+                        <div>
+                            <h6 class="mb-0 fw-bold">{{resever_id.f_name|default:''}}{{' '}}{{resever_id.l_name|default:''}}</h6>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary" onclick="alert('Launching browser Jitsi meeting call...')"><i class="bi bi-camera-video-fill me-1"></i> Join Call</button>
+                </div>
+
+                <!-- Chat History -->
+                <div class="chat-history d-flex flex-column" id="seekerChatBox">
+                    <div class="message-bubble message-outgoing">
+                        Hi Sarah, I wanted to follow up on the Frontend Architect screening. Do you have any updates?
+                        <small class="d-block text-white-50 mt-1 text-end" style="font-size: 0.65rem;">Oct 25, 2025 • 2:14 PM</small>
+                    </div>
+                    <div class="message-bubble message-incoming">
+                        Hi Alex! Yes, the team was impressed by your coding portfolio. We would like to schedule you for Phase 2: Live React System Design.
+                        <small class="d-block text-muted mt-1 text-end" style="font-size: 0.65rem;">Oct 25, 2025 • 4:30 PM</small>
+                    </div>
+                </div>
+
+                <!-- Chat Input Footer -->
+                <div class="bg-white border-top p-3">
+                    <form action="{% url 'jobseeker:messages' %}" method="post" class="d-flex gap-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="pk" value="{{resever_id.id}}">
+                        <input type="text" class="form-control" name="sms" placeholder="Write your reply here..." required>
+                        <button type="submit" class="btn btn-primary" ><i class="bi bi-send-fill"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

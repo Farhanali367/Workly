@@ -1,0 +1,313 @@
+{% load static %}
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Dashboard - SkillBridge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="{% static 'company/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'company/css/components.css' %}">
+    <link rel="stylesheet" href="{% static 'company/css/dashboard.css' %}">
+    <!-- <link rel="stylesheet" href="../css/dark-mode.css"> -->
+</head>
+<body class="bg-mesh">
+
+    <!-- Sidebar -->
+    <div class="sidebar sidebar-dark" id="sidebar">
+        <div class="p-4 d-flex align-items-center justify-content-between border-bottom border-secondary">
+            <a class="sidebar-brand text-decoration-none fw-bold text-dark" href="../index.html">
+                <i class="bi bi-briefcase-fill text-primary"></i> SkillBridge
+            </a>
+            <button class="btn btn-close btn-close-white d-lg-none" id="closeSidebar"></button>
+        </div>
+        
+        <div class="p-3 flex-grow-1">
+            <small class="sidebar-section-title text-white">Core</small>
+            <a href="{% url 'company:dashboard' %}" class="nav-link-sidebar {% if name == 'dashboard' %} active {% endif%}"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
+            <a href="{% url 'company:profile' %}" class="nav-link-sidebar {% if name == 'profile' %} active {% endif%}"><i class="bi bi-building"></i> Company Profile</a>
+            <a href="company-culture.html" class="nav-link-sidebar {% if name == 'culture' %} active {% endif%}"><i class="bi bi-heart-fill"></i> Company Culture</a>
+            <a href="office-locations.html" class="nav-link-sidebar"><i class="bi bi-geo-alt-fill"></i> Office Locations</a>
+            <a href="social-links.html" class="nav-link-sidebar"><i class="bi bi-share-fill"></i> Social Links</a>
+            
+            <small class="sidebar-section-title text-white">Recruitment</small>
+            <a href="{% url 'company:jobs' %}" class="nav-link-sidebar {% if name == 'jobs' %} active {% endif%}"><i class="bi bi-briefcase-fill"></i> Manage Jobs</a>
+            <a href="featured-jobs.html" class="nav-link-sidebar"><i class="bi bi-star-fill"></i> Featured Jobs</a>
+            <a href="candidates.html" class="nav-link-sidebar"><i class="bi bi-people-fill"></i> Candidates Database</a>
+            <a href="saved-candidates.html" class="nav-link-sidebar"><i class="bi bi-bookmark-heart-fill"></i> Saved Candidates</a>
+            <a href="shortlisted-candidates.html" class="nav-link-sidebar"><i class="bi bi-award-fill"></i> Shortlisted</a>
+            <a href="{% url 'company:applications' %}" class="nav-link-sidebar {% if name == 'applications' %} active {% endif%}"><i class="bi bi-send-fill"></i> Applications</a>
+            <a href="interviews.html" class="nav-link-sidebar"><i class="bi bi-calendar2-check-fill"></i> Interviews</a>
+            
+            <small class="sidebar-section-title text-white">Engagement</small>
+            <a href="company-feed.html" class="nav-link-sidebar"><i class="bi bi-newspaper"></i> Company Feed</a>
+            <a href="followers.html" class="nav-link-sidebar"><i class="bi bi-person-plus-fill"></i> Followers</a>
+            <a href="messages.html" class="nav-link-sidebar"><i class="bi bi-chat-dots-fill"></i> Messages</a>
+            
+            <small class="sidebar-section-title text-white">Account</small>
+            <a href="recruiter-profile.html" class="nav-link-sidebar"><i class="bi bi-person-badge-fill"></i> Recruiter Profile</a>
+            <a href="analytics.html" class="nav-link-sidebar"><i class="bi bi-bar-chart-fill"></i> Analytics</a>
+            <a href="settings.html" class="nav-link-sidebar"><i class="bi bi-gear-fill"></i> Settings</a>
+        </div>
+        
+        <div class="sidebar-footer border-top border-secondary">
+            <div class="sidebar-user">
+                <img src="{{cid.logo.url}}" alt="User" class="rounded-circle border border-2 border-primary">
+                <div class="flex-grow-1 overflow-hidden">
+                    <h6 class="user-name mb-0 text-dark text-truncate">{{cid.name}}</h6>
+                    <span class="user-role d-block text-muted text-truncate">{{cid.industry_type|default:''}}</span>
+                </div>
+                <a href="{% url 'account:logout' %}" class="text-muted"><i class="bi bi-box-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+{% block main %}
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar Mobile -->
+        <div class="mobile-topbar d-lg-none">
+            <a class="sidebar-brand text-decoration-none fw-bold text-dark" href="#">
+                <i class="bi bi-briefcase-fill text-primary"></i> SkillBridge
+            </a>
+            <button class="menu-toggle text-dark border-secondary" id="openSidebar"><i class="bi bi-list"></i></button>
+        </div>
+
+        <!-- Dashboard Header -->
+        <div class="dash-topbar slide-up">
+            <div class="dash-greeting">
+                <h3 class="fw-bold mb-1 text-dark">TechNova Command Center 🏢</h3>
+                <p class="text-muted mb-0">Hiring dashboard overview for TechNova Solutions.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="create-post.html" class="btn btn-outline-primary rounded-pill d-none d-md-flex"><i class="bi bi-plus-circle-fill"></i> Share Post</a>
+                <a href="{% url 'company:create_jobs' %}" class="btn btn-primary rounded-pill"><i class="bi bi-briefcase-fill"></i> Post a Job</a>
+            </div>
+        </div>
+
+        <!-- Quick Actions Panel -->
+        <div class="row g-3 mb-4 slide-up delay-100">
+            <div class="col-6 col-md-3">
+                <a href="{% url 'company:create_jobs' %}" class="quick-action-card h-100">
+                    <div class="action-icon bg-primary bg-opacity-10 text-primary">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                    <div>
+                        <h6>New Job</h6>
+                        <p>Post a role</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="candidates.html" class="quick-action-card h-100">
+                    <div class="action-icon bg-success bg-opacity-10 text-success">
+                        <i class="bi bi-search"></i>
+                    </div>
+                    <div>
+                        <h6>Sourcing</h6>
+                        <p>Search talent</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="applications.html" class="quick-action-card h-100">
+                    <div class="action-icon bg-info bg-opacity-10 text-info">
+                        <i class="bi bi-send-fill"></i>
+                    </div>
+                    <div>
+                        <h6>Pipelines</h6>
+                        <p>View applicants</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="interviews.html" class="quick-action-card h-100">
+                    <div class="action-icon bg-warning bg-opacity-10 text-warning">
+                        <i class="bi bi-calendar-event-fill"></i>
+                    </div>
+                    <div>
+                        <h6>Schedules</h6>
+                        <p>Setup loops</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Stats Overview Grid -->
+        <div class="stats-grid mb-4 slide-up delay-100">
+            <div class="stat-card">
+                <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+                    <i class="bi bi-briefcase-fill"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0 text-dark">14</h3>
+                    <p class="text-muted mb-0">Active Openings</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon bg-info bg-opacity-10 text-info">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0 text-dark">1,245</h3>
+                    <p class="text-muted mb-0">Total Applicants</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon bg-success bg-opacity-10 text-success">
+                    <i class="bi bi-award-fill"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0 text-dark">300</h3>
+                    <p class="text-muted mb-0">Shortlisted</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon bg-warning bg-opacity-10 text-warning">
+                    <i class="bi bi-calendar2-week-fill"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0 text-dark">18</h3>
+                    <p class="text-muted mb-0">Interviews Scheduled</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <!-- Charts (Funnel) -->
+            <div class="col-lg-8 slide-up delay-200">
+                <div class="chart-card h-100">
+                    <div class="chart-header">
+                        <h6 class="fw-bold mb-0 text-dark">Candidate Sourcing Funnel</h6>
+                        <select class="form-select form-select-sm w-auto border bg-light py-1 text-dark" style="max-width: 150px;">
+                            <option>All Jobs</option>
+                            <option>Frontend Architect</option>
+                            <option>Senior React Dev</option>
+                        </select>
+                    </div>
+                    <div class="chart-body" style="height: 300px; position: relative;">
+                        <canvas id="funnelChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity / Notifications Widget -->
+            <div class="col-lg-4 slide-up delay-200">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+                        <h6 class="fw-bold mb-0 text-dark">Recent Activities</h6>
+                        <a href="notifications.html" class="text-primary text-xs fw-bold text-decoration-none">View All</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="activity-item">
+                            <div class="activity-dot bg-success bg-opacity-10 text-success">
+                                <i class="bi bi-check-circle-fill"></i>
+                            </div>
+                            <div class="activity-text">
+                                <h6 class="fw-semibold mb-0 text-dark">New Application</h6>
+                                <p class="text-muted"><strong>Alex Carter</strong> applied for <em>Frontend Architect</em> role.</p>
+                            </div>
+                            <span class="activity-time">5m ago</span>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot bg-warning bg-opacity-10 text-warning">
+                                <i class="bi bi-calendar-event-fill"></i>
+                            </div>
+                            <div class="activity-text">
+                                <h6 class="fw-semibold mb-0 text-dark">Interview Booked</h6>
+                                <p class="text-muted">Sarah Smith technical screening scheduled for tomorrow.</p>
+                            </div>
+                            <span class="activity-time">2h ago</span>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot bg-primary bg-opacity-10 text-primary">
+                                <i class="bi bi-patch-check-fill"></i>
+                            </div>
+                            <div class="activity-text">
+                                <h6 class="fw-semibold mb-0 text-dark">Job Post Featured</h6>
+                                <p class="text-muted">Frontend Architect is now featured in corporate listings.</p>
+                            </div>
+                            <span class="activity-time">Yesterday</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Pipelines Overview Table -->
+        <div class="card border-0 shadow-sm slide-up delay-300">
+            <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0 text-dark">Active Job Pipelines</h6>
+                <a href="jobs.html" class="text-primary text-xs fw-bold text-decoration-none">Manage Postings</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-modern mb-0">
+                    <thead>
+                        <tr>
+                            <th>Job Role</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Total Applicants</th>
+                            <th>Shortlisted</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="fw-bold"><a href="job-details.html" class="text-dark">Frontend Architect</a></div>
+                                <div class="text-muted text-xs"><i class="bi bi-geo-alt"></i> San Francisco (Remote)</div>
+                            </td>
+                            <td>Engineering</td>
+                            <td><span class="badge status-active">Active</span></td>
+                            <td><span class="fw-bold">124</span> candidates</td>
+                            <td><span class="fw-bold">18</span> candidates</td>
+                            <td class="text-end">
+                                <a href="applications.html" class="btn btn-outline-primary btn-sm py-1 px-3">Pipeline</a>
+                                <a href="job-details.html" class="btn btn-ghost btn-icon btn-icon-sm text-secondary"><i class="bi bi-eye"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="fw-bold"><a href="job-details.html" class="text-dark">Product Designer</a></div>
+                                <div class="text-muted text-xs"><i class="bi bi-geo-alt"></i> Seattle (Hybrid)</div>
+                            </td>
+                            <td>Design</td>
+                            <td><span class="badge status-active">Active</span></td>
+                            <td><span class="fw-bold">89</span> candidates</td>
+                            <td><span class="fw-bold">12</span> candidates</td>
+                            <td class="text-end">
+                                <a href="applications.html" class="btn btn-outline-primary btn-sm py-1 px-3">Pipeline</a>
+                                <a href="job-details.html" class="btn btn-ghost btn-icon btn-icon-sm text-secondary"><i class="bi bi-eye"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="fw-bold"><a href="job-details.html" class="text-dark">Senior React Developer</a></div>
+                                <div class="text-muted text-xs"><i class="bi bi-geo-alt"></i> Remote</div>
+                            </td>
+                            <td>Engineering</td>
+                            <td><span class="badge status-paused">Paused</span></td>
+                            <td><span class="fw-bold">210</span> candidates</td>
+                            <td><span class="fw-bold">45</span> candidates</td>
+                            <td class="text-end">
+                                <a href="applications.html" class="btn btn-outline-primary btn-sm py-1 px-3">Pipeline</a>
+                                <a href="job-details.html" class="btn btn-ghost btn-icon btn-icon-sm text-secondary"><i class="bi bi-eye"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'company/js/main.js' %}"></script>
+    <script src="{% static 'company/js/company.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!-- login.html -->
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerConnect - Login</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'account/login.css' %}">
+</head>
+
+<body>
+
+    <div class="container-fluid main-container">
+        <div class="row h-100">
+
+            <!-- Left Side -->
+            <div class="col-lg-6 left-panel d-none d-lg-flex">
+                <div class="overlay"></div>
+
+                <div class="content">
+                    <h1>Find Your Dream Job</h1>
+                    <p>
+                        Connect with top companies, discover opportunities,
+                        and build your professional future.
+                    </p>
+
+                    <div class="features">
+                        <div class="feature-box">
+                            <i class="bi bi-briefcase-fill"></i>
+                            <span>1000+ Jobs</span>
+                        </div>
+
+                        <div class="feature-box">
+                            <i class="bi bi-buildings-fill"></i>
+                            <span>Top Companies</span>
+                        </div>
+
+                        <div class="feature-box">
+                            <i class="bi bi-people-fill"></i>
+                            <span>Professional Network</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side -->
+            <div class="col-lg-6 form-section">
+                <div class="login-card">
+
+                    <div class="text-center mb-4">
+                        {% if e_msg %}
+                        <div class="alert alert-danger" role="alert">
+                        {{e_msg}}
+                        </div>
+                        {% endif %}
+                        <h2 class="title">OTP</h2>
+                        <p class="subtitle">
+                            Please Check Your Email : {{e}}.
+                        </p>
+                    </div>
+
+                    <div class="tab-content">
+
+                        <div class="tab-pane fade show active" id="jobseeker">
+
+                            <form action="{% url 'account:otp' %}" method="post">
+                                {%csrf_token%}
+
+                                <div class="mb-3">
+                                    <input type="hidden" name="email" value="{{e}}">
+                                    <label class="form-label">OTP</label>
+
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-shield-lock-fill"></i>
+                                        </span>
+                                        <input type="hidden" name="email" value="{{e}}">
+                                        <input type="text" class="form-control" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" minlength="4" placeholder="Enter Your OTP" name="otp" required>
+                                    </div>
+                                </div>
+                                <div class="text-center mb-4">
+                                    <p class="subtitle" id="timerdispaly">
+                                        Timer : <span id="TimeValue">30</span> : sec
+                                    </p>
+                                </div>
+
+                                <input type="submit" class="btn login-btn seeker-btn w-100" id="note" value="Submit for Reset Password">
+                            </form>
+                            <form action="{% url 'account:forgot_password' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="email" value="{{e}}">
+                                <div style="text-align: center;" >
+                                    <br>
+                                <input type="submit" value="Resend OTP" style="
+                                        background-color: #ffffff;
+                                        color: rgb(255, 100, 100);
+                                        border: none;
+                                        letter-spacing: 0.5px;
+                                        text-decoration: none;">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let timer=60;
+
+        var TimeValue=document.getElementById("TimeValue");
+        var timerdispaly=document.getElementById("timerdispaly")
+        var note=document.getElementById("note")
+        // console.log(note)
+        // console.log("------------->",TimeValue); day 18
+        // console.log("------------->",TimeValue.innerHTML);
+        // console.log("--------->",timerdispaly.innerHTML);
+        
+
+        let timerloop= setInterval(() => {
+            if (timer > 0){
+                if ( timer <= 6){
+                    timerdispaly.style.color = 'red';
+                }
+                timer-=1;
+                TimeValue.innerHTML = timer;
+            }
+            else {
+                note.disabled = true;
+                note.hidden = true;
+                timerdispaly.innerHTML = "Time out !! 🙁";
+                clearInterval(timerloop);
+            }
+            // console.log(timer);
+            
+        }, 1000);
+    </script>
+
+</body>
+
+</html>

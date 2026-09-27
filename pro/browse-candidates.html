@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Candidates - SkillBridge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dark-mode.css">
+</head>
+<body class="bg-mesh pb-5">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-glass">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <i class="bi bi-briefcase-fill text-primary"></i> SkillBridge
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center gap-2">
+                    <li class="nav-item"><a class="nav-link" href="../index.html"><i class="bi bi-house-door"></i>Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="browse-jobs.html"><i class="bi bi-search"></i>Jobs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="companies.html"><i class="bi bi-building"></i>Companies</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="browse-candidates.html"><i class="bi bi-people"></i>Candidates</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pricing.html"><i class="bi bi-tag"></i>Pricing</a></li>
+                    <li class="nav-item d-none d-lg-block"><div class="vr h-100 mx-2 text-muted"></div></li>
+                    <li class="nav-item">
+                        <button class="btn btn-ghost btn-icon theme-toggle text-secondary" title="Toggle Theme">
+                            <i class="bi bi-moon-fill"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item mt-2 mt-lg-0"><a class="btn btn-outline-primary px-3" href="login.html">Sign In</a></li>
+                    <li class="nav-item mt-2 mt-lg-0"><a class="btn btn-primary px-3" href="register.html">Join Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Header -->
+    <div class="bg-white border-bottom pt-4 pb-4" style="margin-top: -16px;">
+        <div class="container mt-4">
+            <form class="hero-search-wrapper p-2 bg-white rounded-pill border d-flex flex-column flex-md-row gap-2">
+                <div class="d-flex align-items-center flex-grow-1 px-3">
+                    <i class="bi bi-search text-muted"></i>
+                    <input type="text" class="form-control border-0 shadow-none bg-transparent" placeholder="Sourced skills, roles, or universities">
+                </div>
+                <div class="divider d-none d-md-block"></div>
+                <div class="d-flex align-items-center flex-grow-1 px-3">
+                    <i class="bi bi-geo-alt text-muted"></i>
+                    <input type="text" class="form-control border-0 shadow-none bg-transparent" placeholder="City or region">
+                </div>
+                <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 mt-2 mt-md-0 d-flex align-items-center gap-2 m-1">
+                    Search Candidates
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row g-4">
+            <!-- Sidebar Filters -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="card border-0 shadow-sm sticky-top" style="top: 100px;">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+                        <h6 class="fw-bold mb-0">Filter Profiles</h6>
+                        <a href="#" class="text-sm text-decoration-none">Clear All</a>
+                    </div>
+                    <div class="card-body">
+                        <!-- Role Categories -->
+                        <div class="mb-4">
+                            <h6 class="fw-semibold mb-3">Function</h6>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="role1" checked>
+                                <label class="form-check-label text-muted" for="role1">Software Engineering</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="role2">
+                                <label class="form-check-label text-muted" for="role2">Product Design</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="role3">
+                                <label class="form-check-label text-muted" for="role3">Data Science</label>
+                            </div>
+                        </div>
+
+                        <!-- Experience Level -->
+                        <div class="mb-4">
+                            <h6 class="fw-semibold mb-3">Years of Experience</h6>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="exp1">
+                                <label class="form-check-label text-muted" for="exp1">Junior (0-2 yrs)</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="exp2" checked>
+                                <label class="form-check-label text-muted" for="exp2">Mid-Level (3-5 yrs)</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="exp3">
+                                <label class="form-check-label text-muted" for="exp3">Senior (6+ yrs)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Candidate Grid -->
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Showing 428 Professionals</h5>
+                    <select class="form-select w-auto py-1 shadow-sm">
+                        <option>Sort by: Best Match</option>
+                        <option>Recently Active</option>
+                    </select>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Candidate Card 1 -->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="candidate-card card-hover">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200" alt="Avatar" class="candidate-avatar">
+                            <h6 class="candidate-name mb-1">Sarah Jenkins</h6>
+                            <p class="candidate-title mb-2">Senior Frontend Developer</p>
+                            <div class="candidate-location mb-3"><i class="bi bi-geo-alt"></i> San Francisco, CA</div>
+                            <div class="candidate-skills mb-3">
+                                <span class="badge">React</span>
+                                <span class="badge">TypeScript</span>
+                                <span class="badge">Next.js</span>
+                            </div>
+                            <a href="candidate-preview.html" class="btn btn-outline-primary w-100 rounded-pill py-2">View Profile</a>
+                        </div>
+                    </div>
+
+                    <!-- Candidate Card 2 -->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="candidate-card card-hover">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200" alt="Avatar" class="candidate-avatar">
+                            <h6 class="candidate-name mb-1">David Chen</h6>
+                            <p class="candidate-title mb-2">Machine Learning Engineer</p>
+                            <div class="candidate-location mb-3"><i class="bi bi-geo-alt"></i> Boston, MA</div>
+                            <div class="candidate-skills mb-3">
+                                <span class="badge">Python</span>
+                                <span class="badge">PyTorch</span>
+                                <span class="badge">TensorFlow</span>
+                            </div>
+                            <a href="candidate-preview.html" class="btn btn-outline-primary w-100 rounded-pill py-2">View Profile</a>
+                        </div>
+                    </div>
+
+                    <!-- Candidate Card 3 -->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="candidate-card card-hover">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" alt="Avatar" class="candidate-avatar">
+                            <h6 class="candidate-name mb-1">Elena Rostova</h6>
+                            <p class="candidate-title mb-2">Lead UI/UX Designer</p>
+                            <div class="candidate-location mb-3"><i class="bi bi-geo-alt"></i> Austin, TX</div>
+                            <div class="candidate-skills mb-3">
+                                <span class="badge">Figma</span>
+                                <span class="badge">Prototyping</span>
+                                <span class="badge">User Research</span>
+                            </div>
+                            <a href="candidate-preview.html" class="btn btn-outline-primary w-100 rounded-pill py-2">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <nav class="mt-5 d-flex justify-content-center">
+                    <ul class="pagination pagination-sm shadow-sm rounded-pill bg-white mb-0 overflow-hidden">
+                        <li class="page-item disabled"><a class="page-link border-0 text-muted border-end" href="#">Previous</a></li>
+                        <li class="page-item active"><a class="page-link border-0 bg-primary text-white fw-bold" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link border-0 text-dark fw-medium" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link border-0 text-dark border-start" href="#">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="container mt-5 pt-5 border-top text-muted">
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <h6 class="fw-bold text-dark"><i class="bi bi-briefcase-fill text-primary"></i> SkillBridge</h6>
+                <p class="text-sm">Connecting professionals, enabling recruitments, and accelerating business transformations with next-generation analytics.</p>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <h6 class="fw-bold text-dark text-sm">Company</h6>
+                <ul class="list-unstyled text-sm">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="success-stories.html">Success Stories</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <h6 class="fw-bold text-dark text-sm">Support</h6>
+                <ul class="list-unstyled text-sm">
+                    <li><a href="help-center.html">Help Center</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <h6 class="fw-bold text-dark text-sm">Legal</h6>
+                <ul class="list-unstyled text-sm">
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core JS -->
+    <script src="../js/main.js"></script>
+</body>
+</html>

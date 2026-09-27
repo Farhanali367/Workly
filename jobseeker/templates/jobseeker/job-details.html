@@ -1,0 +1,227 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details - SkillBridge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'jobseeker/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'jobseeker/css/components.css' %}">
+
+    <style>
+        body.bg-main{
+            background: #eef2f7;
+            padding: 20px;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .page-shell{
+            max-width: 1200px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 35px rgba(0,0,0,.08);
+            position: relative;
+        }
+
+        .back-btn{
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
+            text-decoration: none;
+            color: #0d6efd;
+            background: transparent;
+            border: 1.5px solid #0d6efd;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover{
+            background: #0d6efd;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(13,110,253,.18);
+        }
+
+        .company-logo-box{
+            width: 120px;
+            height: 120px;
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.06);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .company-logo-box img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .apply-btn{
+            background: linear-gradient(135deg, #0d6efd, #4f8cff);
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            padding: 12px 36px;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 10px 24px rgba(13,110,253,.22);
+            transition: all .35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .apply-btn::before{
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+            transition: left .6s ease;
+        }
+
+        .apply-btn:hover{
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 16px 30px rgba(13,110,253,.32);
+        }
+
+        .apply-btn:hover::before{
+            left: 100%;
+        }
+
+        @media (max-width: 992px){
+            .page-shell{
+                margin: 12px auto;
+                border-radius: 14px;
+            }
+
+            body.bg-main{
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 576px){
+            .page-shell{
+                margin: 8px auto;
+                border-radius: 12px;
+            }
+
+            .company-logo-box{
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-main pb-5">
+    <div class="page-shell">
+        <a href="javascript:history.back()" class="back-btn">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+
+        <div class="bg-white border-bottom position-relative" style="margin-top: -10px;">
+            <div style="height: 250px; overflow: hidden;">
+                <img src="{{my_job_detail.company_fk.cover_image.url}}" class="w-100 object-fit-cover" alt="Company Cover">
+            </div>
+
+            <div class="container position-relative slide-up">
+                <div class="d-flex flex-column flex-md-row gap-4 align-items-start pb-5" style="margin-top: -50px;">
+                    <div class="company-logo-box">
+                        <img src="{{ my_job_detail.company_fk.logo.url }}" alt="Company Logo">
+                    </div>
+
+                    <div class="flex-grow-1 pt-md-5 mt-md-3">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start">
+                            <div>
+                                <h2 class="fw-bold mb-1 text-dark">{{my_job_detail.job_title}}</h2>
+                                <div class="text-muted fs-5 mb-2">
+                                    <span style="color: #0d6efd;">{{my_job_detail.company_fk.name}}</span>
+                                    <i class="bi bi-dot"></i> {{my_job_detail.location}}
+                                </div>
+                                <div class="job-meta">
+                                    <span><i class="bi bi-briefcase"></i> {{my_job_detail.employment_type}}</span>
+                                    <span><i class="bi bi-cash"></i> {{my_job_detail.min_salary}} - {{my_job_detail.max_salary}} / yr + Equity</span>
+                                    <span class="text-success"><i class="bi bi-clock-history"></i> {{my_job_detail.whenpublished}}</span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-column align-items-center gap-2 mt-3 mt-md-0 text-center">
+                                <form action="{% url 'jobseeker:applye_jobs' %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="pk" value="{{my_job_detail.id}}">
+                                    <input type="hidden" name="page" value="job_search">
+                                    <button class="apply-btn">
+                                        <i class="bi bi-send"></i> Apply
+                                    </button>
+                                </form>
+                                <small class="text-muted">15 applicants • Actively reviewing</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <div class="row justify-content-center g-4">
+                <div class="col-12 slide-up delay-100">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4 p-md-5">
+                            <h4 class="fw-bold mb-4 text-dark">Job Discription</h4>
+                            <div class="text-muted" style="line-height: 1.8;">
+                                <p>{{my_job_detail.job_discription}}</p>
+
+                                <h5 class="fw-bold text-dark mt-5 mb-3">Key Responsibilities</h5>
+                                <ul class="mb-4">
+                                    <li>Architect and build scalable, performant, and accessible frontend applications using React and strictly typed TypeScript.</li>
+                                    <li>Collaborate across engineering, product, and design organizations to establish technical vision and UI delivery standards.</li>
+                                    <li>Identify and address web performance bottlenecks, establishing performance budgets for feature teams.</li>
+                                    <li>Mentor senior engineers and provide code reviews for complex architectures.</li>
+                                </ul>
+
+                                <h5 class="fw-bold text-dark mt-5 mb-3">Minimum Qualifications</h5>
+                                <ul class="mb-4">
+                                    <li>{{my_job_detail.experience}}</li>
+                                    <li>Deep expertise in JavaScript/TypeScript and modern web frameworks (React, Next.js).</li>
+                                    <li>Proven track record of designing highly scalable system architectures.</li>
+                                    <li>Strong understanding of web vitals, accessibility (a11y), and state management.</li>
+                                </ul>
+                            </div>
+
+                            <hr class="my-5">
+
+                            <h4 class="fw-bold mb-4 text-dark">Skills Required</h4>
+                            <div class="d-flex flex-wrap gap-2 mb-4">
+                                {% for i in skills %}
+                                    <span class="badge bg-light text-secondary border px-3 py-2 fs-6">{{ i }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'jobseeker/js/main.js' %}"></script>
+</body>
+</html>

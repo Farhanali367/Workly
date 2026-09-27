@@ -1,0 +1,103 @@
+{% extends 'jobseeker/dashboard.html' %}
+{% block css %}
+    <style>
+        :root {
+            --primary-color: #0A66C2;
+            --bg-main: #F3F2EF;
+        }
+        body { padding-top: 0; background-color: var(--bg-main); }
+        .sidebar {
+            width: 280px; height: 100vh; position: fixed; top: 0; left: 0;
+            background: #fff; border-right: 1px solid var(--border-light); z-index: 1000; overflow-y: auto;
+        }
+        .main-content { margin-left: 280px; padding: 1.5rem; min-height: 100vh; }
+        .nav-link-sidebar {
+            color: #666; padding: 0.75rem 1.25rem; border-radius: var(--radius-md);
+            margin: 0.25rem 1rem; display: flex; align-items: center; gap: 0.75rem; font-weight: 500; text-decoration: none;
+            transition: all 0.2s;
+        }
+        .nav-link-sidebar:hover, .nav-link-sidebar.active {
+            background-color: var(--bg-active); color: var(--primary);
+        }
+        @media (max-width: 992px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.show { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 1rem; }
+        }
+    </style>
+{% endblock %}
+{% block maincontent %}
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar Mobile -->
+        <div class="d-flex align-items-center justify-content-between mb-4 d-lg-none">
+            <h4 class="fw-bold mb-0">Settings</h4>
+            <button class="btn btn-light border" id="openSidebar"><i class="bi bi-list fs-4"></i></button>
+        </div>
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4 slide-up">
+            <div>
+                <h3 class="fw-bold mb-1">Account Configurations</h3>
+                <p class="text-muted mb-0">Configure your profile visibility parameters, password security, and notifications.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Settings options Left -->
+            <div class="col-lg-6 slide-up delay-100">
+                <div class="card border-0 shadow-sm p-4 mb-4">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-shield-lock-fill text-primary"></i> Change Password</h6>
+                    <form id="passwordSettingsForm">
+                        <div class="mb-3">
+                            <label class="form-label text-xs">Current Password</label>
+                            <input type="password" class="form-control" placeholder="••••••••" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-xs">New Password</label>
+                            <input type="password" class="form-control" placeholder="••••••••" required>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="alert('Password updated.')">Update Credentials</button>
+                    </form>
+                </div>
+
+                <div class="card border-0 shadow-sm p-4">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-shield-fill-check text-primary"></i> Two-Factor Authentication (2FA)</h6>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="seeker2FA" checked>
+                        <label class="form-check-label text-sm text-secondary" for="seeker2FA">Protect my login with authentication security prompt codes</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings options Right -->
+            <div class="col-lg-6 slide-up delay-200">
+                <div class="card border-0 shadow-sm p-4 mb-4">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-broadcast text-primary"></i> Active Sessions Audit</h6>
+                    <div class="list-group">
+                        <div class="list-group-item p-3 border rounded mb-2 d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="fw-bold mb-0 text-sm">Chrome browser (Seattle, WA)</h6>
+                                <small class="text-success text-xs">This session (Active)</small>
+                            </div>
+                            <span class="badge bg-primary">Active</span>
+                        </div>
+                        <div class="list-group-item p-3 border rounded mb-0 d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="fw-bold mb-0 text-sm">iOS Mobile application</h6>
+                                <small class="text-muted text-xs">Logged in 2 days ago</small>
+                            </div>
+                            <button class="btn btn-sm btn-outline-danger" onclick="alert('Mobile login terminated.')">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm p-4 border border-danger">
+                    <h6 class="fw-bold text-danger mb-2">Delete Profile Account</h6>
+                    <p class="text-muted text-sm mb-4">Warning: This action will permanently remove your candidate files and cancel all active applications in progress.</p>
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">Terminate My Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

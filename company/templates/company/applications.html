@@ -1,0 +1,115 @@
+{% extends 'company/dashboard.html' %}
+{% block main %}
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar Mobile -->
+        <div class="mobile-topbar d-lg-none">
+            <a class="sidebar-brand text-decoration-none fw-bold text-white" href="#">
+                <i class="bi bi-briefcase-fill text-primary"></i> SkillBridge
+            </a>
+            <button class="menu-toggle text-white border-secondary" id="openSidebar"><i class="bi bi-list"></i></button>
+        </div>
+
+        <div class="dash-topbar slide-up">
+            <div class="dash-greeting">
+                <h3 class="fw-bold mb-1 text-dark">Candidate Applications</h3>
+                <p class="text-muted mb-0">Evaluate candidates, sort matching levels, and transition pipelines.</p>
+            </div>
+        </div>
+
+        <!-- Sourcing Pipeline Filters -->
+        <div class="card border-0 shadow-sm p-3 mb-4 slide-up delay-100">
+            <div class="row g-3">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-secondary"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" id="appSearch" class="form-control border-secondary text-dark" placeholder="Search applicant name or role...">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select id="roleFilter" class="form-select border-secondary text-dark bg-light">
+                        <option value="">All Job Roles</option>
+                        <option value="Frontend Architect">Frontend Architect</option>
+                        <option value="Product Designer">Product Designer</option>
+                        <option value="Senior React Developer">Senior React Developer</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select id="statusFilter" class="form-select border-secondary text-dark bg-light">
+                        <option value="">All Statuses</option>
+                        <option value="applied">Applied / New</option>
+                        <option value="shortlisted">Shortlisted</option>
+                        <option value="interview">Interview Scheduled</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pipeline Table list -->
+        <div class="card border-0 shadow-sm slide-up delay-200">
+            <div class="table-responsive">
+                <table class="table table-modern mb-0" id="appTable">
+                    <thead>
+                        <tr>
+                            <th>Applicant</th>
+                            <th>Role Applied</th>
+                            <th>Applyed ⌚ time</th>
+                            <th>Stage</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for application in applications %}
+                        <tr class="app-row" data-status="applied" data-role="Frontend Architect">
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="{{application.job_fk.profile_pic.url}}" class="rounded-circle border border-2 border-secondary" style="width: 50px; height: 50px; object-fit: cover;"alt="Profile">
+                                    <div>
+                                        <div class="fw-bold"><h7><b>{{application.job_fk}}</b></h7></div>
+                                        <div class="text-muted text-xs">{{application.job_fk.user_fk.email}}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{application.jobs_fk.job_title}}</td>
+                            <td>
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-20">{{application.whenpublished}}</span>
+                            </td>
+                            <td><span class="status-badge status-applied">{{application.status}}</span></td>
+                            <td class="text-end">
+                                <form action="{% url 'company:applicant' %}" method="post" >
+                                    {% csrf_token %}
+                                    <input type="hidden" name="pk" value="{{application.id}}">
+                                    <input type="hidden" name="status" value="Reviewed">
+                                    <button type="submit" class="btn btn-outline-primary btn-sm py-1 px-3">Evaluate</button>
+                                </form>
+                                <!-- <a href="application-details.html" ></a> -->
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <!-- <tr class="app-row" data-status="shortlisted" data-role="Product Designer">
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="https://ui-avatars.com/api/?name=Sarah+Smith&background=random" class="rounded-circle border border-2 border-secondary" width="36" alt="Sarah">
+                                    <div>
+                                        <div class="fw-bold"><a href="application-details.html" class="text-white">Sarah Smith</a></div>
+                                        <div class="text-muted text-xs">sarah.smith@email.com</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Product Designer</td>
+                            <td>
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-20">88% Match</span>
+                            </td>
+                            <td><span class="status-badge status-shortlisted">Shortlisted</span></td>
+                            <td class="text-end">
+                                <a href="application-details.html" class="btn btn-outline-primary btn-sm py-1 px-3">Evaluate</a>
+                            </td>
+                        </tr> -->
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

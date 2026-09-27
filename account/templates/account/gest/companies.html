@@ -1,0 +1,67 @@
+{% extends 'account/home.html' %}
+
+{% block mainconten %}
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <h4 class="fw-bold mb-0 text-dark">Trending Companies</h4>
+            <a href="#" class="text-decoration-none">View All <i class="bi bi-arrow-right"></i></a>
+        </div>
+        
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 border-radius-lg">
+            <!-- Company Card 1 -->
+            <div class="col slide-up delay-100">
+                <div class="card border-0 shadow-sm h-100 card-hover text-center p-4 cursor-pointer" onclick="window.location.href='company-profile.html'">
+                    <div class="bg-light rounded-circle p-3 mx-auto mb-3 border shadow-sm" style="width: 80px; height: 80px;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Company Logo" class="w-100 h-100 object-fit-contain">
+                    </div>
+                    <h5 class="fw-bold mb-1 d-flex align-items-center justify-content-center gap-1 text-dark">Microsoft <i class="bi bi-patch-check-fill text-primary ms-1" style="font-size: 1rem;"></i></h5>
+                    <div class="text-warning mb-2 h6">
+                        <i class="bi bi-star-fill"></i> 4.5 <span class="text-muted text-sm fw-normal">(12k reviews)</span>
+                    </div>
+                    <p class="text-muted text-sm mb-4 flex-grow-1">Empowering others to achieve more. Explore roles in AI, Cloud, and Consumer Products.</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button class="btn btn-outline-primary rounded-pill px-4 btn-sm">Follow</button>
+                        <a href="company-profile.html" class="btn btn-light border rounded-pill px-4 btn-sm">345 Jobs</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Company Card 2 -->
+            <div class="col slide-up delay-200">
+                <div class="card border-0 shadow-sm h-100 card-hover text-center p-4 cursor-pointer" onclick="window.location.href='company-profile.html'">
+                    <div class="bg-light rounded-circle p-3 mx-auto mb-3 border shadow-sm" style="width: 80px; height: 80px;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Company Logo" class="w-100 h-100 object-fit-contain">
+                    </div>
+                    <h5 class="fw-bold mb-1 d-flex align-items-center justify-content-center gap-1 text-dark">Amazon</h5>
+                    <div class="text-warning mb-2 h6">
+                        <i class="bi bi-star-fill"></i> 4.2 <span class="text-muted text-sm fw-normal">(34k reviews)</span>
+                    </div>
+                    <p class="text-muted text-sm mb-4 flex-grow-1">Earth's most customer-centric company. Pioneer across eCommerce, AWS and Logistics.</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button class="btn btn-outline-primary rounded-pill px-4 btn-sm">Follow</button>
+                        <a href="company-profile.html" class="btn btn-light border rounded-pill px-4 btn-sm">1,024 Jobs</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Company Card 3 -->
+            <div class="col slide-up delay-300">
+                <div class="card border-0 shadow-sm h-100 card-hover text-center p-4 cursor-pointer" onclick="window.location.href='company-profile.html'">
+                    <div class="bg-primary text-white rounded-circle p-3 ms-auto me-auto mb-3 border shadow-sm d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <span class="fs-3 fw-bold">St</span>
+                    </div>
+                    <h5 class="fw-bold mb-1 d-flex align-items-center justify-content-center gap-1 text-dark">Stripe</h5>
+                    <div class="text-warning mb-2 h6">
+                        <i class="bi bi-star-fill"></i> 4.8 <span class="text-muted text-sm fw-normal">(1.4k reviews)</span>
+                    </div>
+                    <p class="text-muted text-sm mb-4 flex-grow-1">Financial infrastructure for the internet. Highly rated for engineering culture and benefits.</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button class="btn btn-outline-primary rounded-pill px-4 btn-sm">Follow</button>
+                        <a href="company-profile.html" class="btn btn-light border rounded-pill px-4 btn-sm">45 Jobs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock%}

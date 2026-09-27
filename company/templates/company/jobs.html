@@ -1,0 +1,255 @@
+{% extends 'company/dashboard.html' %}
+
+{% block main %}
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar Mobile -->
+        <div class="mobile-topbar d-lg-none">
+            <a class="sidebar-brand text-decoration-none fw-bold text-white" href="#">
+                <i class="bi bi-briefcase-fill text-primary"></i> SkillBridge
+            </a>
+            <button class="menu-toggle text-white border-secondary" id="openSidebar"><i class="bi bi-list"></i></button>
+        </div>
+
+        <div class="dash-topbar slide-up">
+            <div class="dash-greeting">
+                <h3 class="fw-bold mb-1 text-dark">Manage Corporate Job Listings</h3>
+                <p class="text-muted mb-0">Track application metrics, feature roles, and toggle open status.</p>
+            </div>
+            <a href="{% url 'company:create_jobs' %}" class="btn btn-primary rounded-pill"><i class="bi bi-plus-lg"></i> Post a Job</a>
+        </div>
+
+        <!-- Filter Options Card -->
+        <div class="card border-0 shadow-sm p-3 mb-4 slide-up delay-100">
+            <div class="row g-3">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-secondary"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" id="jobSearch" class="form-control border-secondary text-dark" placeholder="Search by Job Title or Keyword...">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select id="deptFilter" class="form-select border-secondary text-white bg-dark">
+                        <option value="">All Departments</option>
+                        <option value="engineering">Engineering</option>
+                        <option value="design">Design</option>
+                        <option value="product">Product</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-primary w-50 active filter-status-btn" onclick="filterStatus('all', this)">All</option>
+                        <button class="btn btn-outline-primary w-50 filter-status-btn" onclick="filterStatus('active', this)">Active</option>
+                        <button class="btn btn-outline-primary w-50 filter-status-btn" onclick="filterStatus('paused', this)">Paused</option>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job Cards List -->
+        <div class="d-flex flex-column gap-3" id="jobCardList">
+            <!-- Job Card 1 -->
+            <div class="card border-0 shadow-sm p-4 job-item" data-dept="engineering" data-status="active">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded p-3" style="width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-briefcase-fill fs-3"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-white mb-1 job-title-text"><a href="job-details.html" class="text-white">Frontend Architect</a></h5>
+                            <p class="text-muted text-sm mb-2">
+                                <i class="bi bi-building"></i> Engineering &bull; 
+                                <i class="bi bi-geo-alt"></i> San Francisco HQ (Remote) &bull; 
+                                <i class="bi bi-cash-stack"></i> $140,000 - $180,000
+                            </p>
+                            <div class="d-flex gap-2">
+                                <span class="badge status-active job-status-badge">Active</span>
+                                <span class="badge bg-warning text-dark featured-badge"><i class="bi bi-star-fill me-1"></i> Featured</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-end align-items-center">
+                        <div>
+                            <span class="d-block fw-bold text-white text-md-center mb-0">124</span>
+                            <small class="text-muted">Applicants</small>
+                        </div>
+                        <div class="vr mx-2 text-secondary d-none d-md-block" style="height: 40px;"></div>
+                        <div class="d-flex gap-1">
+                            <a href="edit-job.html" class="btn btn-ghost btn-icon" title="Edit Job"><i class="bi bi-pencil"></i></a>
+                            <button class="btn btn-ghost btn-icon text-warning feature-btn" onclick="toggleFeature(this)" title="Toggle Featured"><i class="bi bi-star-fill"></i></button>
+                            <button class="btn btn-ghost btn-icon text-secondary pause-btn" onclick="togglePause(this)" title="Pause Hiring"><i class="bi bi-pause-fill"></i></button>
+                            <button class="btn btn-ghost btn-icon text-danger" onclick="deleteJob(this)" title="Delete Job"><i class="bi bi-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Card 2 -->
+            <div class="card border-0 shadow-sm p-4 job-item" data-dept="design" data-status="active">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded p-3" style="width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-palette-fill fs-3"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-white mb-1 job-title-text"><a href="job-details.html" class="text-white">Product Designer</a></h5>
+                            <p class="text-muted text-sm mb-2">
+                                <i class="bi bi-building"></i> Design &bull; 
+                                <i class="bi bi-geo-alt"></i> Seattle HQ (Hybrid) &bull; 
+                                <i class="bi bi-cash-stack"></i> $110,000 - $140,000
+                            </p>
+                            <div class="d-flex gap-2">
+                                <span class="badge status-active job-status-badge">Active</span>
+                                <span class="badge bg-light text-muted featured-badge d-none"><i class="bi bi-star me-1"></i> Standard</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-end align-items-center">
+                        <div>
+                            <span class="d-block fw-bold text-white text-md-center mb-0">89</span>
+                            <small class="text-muted">Applicants</small>
+                        </div>
+                        <div class="vr mx-2 text-secondary d-none d-md-block" style="height: 40px;"></div>
+                        <div class="d-flex gap-1">
+                            <a href="edit-job.html" class="btn btn-ghost btn-icon" title="Edit Job"><i class="bi bi-pencil"></i></a>
+                            <button class="btn btn-ghost btn-icon text-secondary feature-btn" onclick="toggleFeature(this)" title="Toggle Featured"><i class="bi bi-star"></i></button>
+                            <button class="btn btn-ghost btn-icon text-secondary pause-btn" onclick="togglePause(this)" title="Pause Hiring"><i class="bi bi-pause-fill"></i></button>
+                            <button class="btn btn-ghost btn-icon text-danger" onclick="deleteJob(this)" title="Delete Job"><i class="bi bi-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Card 3 -->
+            <div class="card border-0 shadow-sm p-4 job-item" data-dept="engineering" data-status="paused">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded p-3" style="width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-briefcase-fill fs-3"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-white mb-1 job-title-text"><a href="job-details.html" class="text-white">Senior React Developer</a></h5>
+                            <p class="text-muted text-sm mb-2">
+                                <i class="bi bi-building"></i> Engineering &bull; 
+                                <i class="bi bi-geo-alt"></i> Remote &bull; 
+                                <i class="bi bi-cash-stack"></i> $120,000 - $150,000
+                            </p>
+                            <div class="d-flex gap-2">
+                                <span class="badge status-paused job-status-badge">Paused</span>
+                                <span class="badge bg-light text-muted featured-badge d-none"><i class="bi bi-star me-1"></i> Standard</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-end align-items-center">
+                        <div>
+                            <span class="d-block fw-bold text-white text-md-center mb-0">210</span>
+                            <small class="text-muted">Applicants</small>
+                        </div>
+                        <div class="vr mx-2 text-secondary d-none d-md-block" style="height: 40px;"></div>
+                        <div class="d-flex gap-1">
+                            <a href="edit-job.html" class="btn btn-ghost btn-icon" title="Edit Job"><i class="bi bi-pencil"></i></a>
+                            <button class="btn btn-ghost btn-icon text-secondary feature-btn" onclick="toggleFeature(this)" title="Toggle Featured"><i class="bi bi-star"></i></button>
+                            <button class="btn btn-ghost btn-icon text-warning pause-btn" onclick="togglePause(this)" title="Reopen Hiring"><i class="bi bi-play-fill"></i></button>
+                            <button class="btn btn-ghost btn-icon text-danger" onclick="deleteJob(this)" title="Delete Job"><i class="bi bi-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script>
+        // Real-time keyword filter
+        const jobSearch = document.getElementById('jobSearch');
+        const deptFilter = document.getElementById('deptFilter');
+        
+        jobSearch.addEventListener('input', applyFilters);
+        deptFilter.addEventListener('change', applyFilters);
+
+        let currentStatusFilter = 'all';
+
+        function filterStatus(status, btn) {
+            document.querySelectorAll('.filter-status-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentStatusFilter = status;
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const query = jobSearch.value.toLowerCase();
+            const dept = deptFilter.value;
+            const items = document.querySelectorAll('.job-item');
+
+            items.forEach(item => {
+                const title = item.querySelector('.job-title-text').innerText.toLowerCase();
+                const itemDept = item.getAttribute('data-dept');
+                const itemStatus = item.getAttribute('data-status');
+
+                let matchesQuery = title.includes(query);
+                let matchesDept = !dept || itemDept === dept;
+                let matchesStatus = currentStatusFilter === 'all' || itemStatus === currentStatusFilter;
+
+                if (matchesQuery && matchesDept && matchesStatus) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Job interactive actions
+        function deleteJob(btn) {
+            if (confirm('Are you sure you want to delete this job listing?')) {
+                btn.closest('.job-item').remove();
+                showToast('Job posting has been deleted.', 'error');
+            }
+        }
+
+        function togglePause(btn) {
+            const card = btn.closest('.job-item');
+            const currentStatus = card.getAttribute('data-status');
+            const badge = card.querySelector('.job-status-badge');
+            
+            if (currentStatus === 'active') {
+                card.setAttribute('data-status', 'paused');
+                badge.innerText = 'Paused';
+                badge.className = 'badge status-paused job-status-badge';
+                btn.className = 'btn btn-ghost btn-icon text-warning pause-btn';
+                btn.innerHTML = '<i class="bi bi-play-fill"></i>';
+                btn.title = 'Reopen Hiring';
+                showToast('Hiring paused for this role.');
+            } else {
+                card.setAttribute('data-status', 'active');
+                badge.innerText = 'Active';
+                badge.className = 'badge status-active job-status-badge';
+                btn.className = 'btn btn-ghost btn-icon text-secondary pause-btn';
+                btn.innerHTML = '<i class="bi bi-pause-fill"></i>';
+                btn.title = 'Pause Hiring';
+                showToast('Hiring reopened for this role.');
+            }
+            applyFilters();
+        }
+
+        function toggleFeature(btn) {
+            const card = btn.closest('.job-item');
+            const featuredBadge = card.querySelector('.featured-badge');
+            const isFeatured = !featuredBadge.classList.contains('d-none');
+
+            if (isFeatured) {
+                featuredBadge.classList.add('d-none');
+                btn.className = 'btn btn-ghost btn-icon text-secondary feature-btn';
+                btn.innerHTML = '<i class="bi bi-star"></i>';
+                showToast('Job listing standard status set.');
+            } else {
+                featuredBadge.classList.remove('d-none');
+                featuredBadge.className = 'badge bg-warning text-dark featured-badge';
+                featuredBadge.innerHTML = '<i class="bi bi-star-fill me-1"></i> Featured';
+                btn.className = 'btn btn-ghost btn-icon text-warning feature-btn';
+                btn.innerHTML = '<i class="bi bi-star-fill"></i>';
+                showToast('Job listing highlighted as Featured.');
+            }
+        }
+    </script> -->
+{% endblock %}
+</body>
+</html>

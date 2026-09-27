@@ -1,0 +1,154 @@
+{% extends 'company/dashboard.html' %}
+
+{% block main %}
+{% load static %}
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar Mobile -->
+        <div class="mobile-topbar d-lg-none">
+            <a class="sidebar-brand text-decoration-none fw-bold text-dark" href="#">
+                <i class="bi bi-briefcase-fill text-primary"></i> SkillBridge
+            </a>
+            <button class="menu-toggle text-dark border-secondary" id="openSidebar"><i class="bi bi-list"></i></button>
+        </div>
+
+        <div class="dash-topbar slide-up">
+            <div class="dash-greeting">
+                <h3 class="fw-bold mb-1 text-dark">Edit Corporate Profile Details</h3>
+                <p class="text-muted mb-0">Update logo, cover image, and metadata for TechNova Solutions.</p>
+            </div>
+            <a href="{% url 'company:profile' %}" class="btn btn-outline-primary rounded-pill"><i class="bi bi-eye"></i> View Profile</a>
+        </div>
+
+        <!-- Forms Container -->
+        <div class="card border-0 shadow-sm p-4 slide-up delay-100">
+            <form class="needs-validation" action="{% url 'company:edit_profile' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- Cover Image & Logo Upload Simulators -->
+                <div class="mb-4 position-relative">
+                    <label class="form-label d-block text-dark mb-2">Cover Image & Logo</label>
+                    <div class="position-relative overflow-hidden rounded-3 bg-dark border border-secondary" style="height: 180px;">
+                        <img src="{{ cid.cover_image.url }}" id="coverImagePreview" class="w-100 h-100 object-fit-cover opacity-50" alt="Cover Preview">
+                        <div class="position-absolute top-50 start-50 translate-middle text-center">
+                            <label for="coverUpload" class="btn btn-sm btn-light rounded-pill px-3 cursor-pointer">
+                                <i class="bi bi-camera-fill me-1"></i> Change Cover
+                            </label>
+                            <input type="file" id="coverUpload" class="d-none" name="cover_image">
+                        </div>
+                    </div>
+                    <div class="position-absolute" style="bottom: -40px; left: 24px; z-index: var(--z-base);">
+                        <div class="position-relative" style="width: 100px; height: 100px;">
+                            <img src="{{ cid.logo.url }}" id="logoPreview" class="w-100 h-100 rounded-3 border border-4 border-slate object-fit-cover" alt="Logo Preview" >
+                            <label for="logoUpload" class="btn btn-sm btn-primary rounded-circle p-1 position-absolute bottom-0 end-0 cursor-pointer" style="width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-pencil-fill text-white" style="font-size: 0.75rem;"></i>
+                            </label>
+                            <input type="file" id="logoUpload" class="d-none"  name="logo">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spacer for Logo offset -->
+                <div style="height: 50px;"></div>
+                <div class="col-md-6">
+                        <label for="companyName" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="companyName" value="{{ cid.com_fk }}" required disabled>
+                    </div>
+                    <br>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="companyName" class="form-label">Company Name</label>
+                        <input type="text" class="form-control" id="companyName" name="name" value="{{ cid.name|default:''}}" required>
+                        <div class="invalid-feedback">Company name is required.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="tagline" class="form-label">Company Tagline / Headline</label>
+                        <input type="text" class="form-control" id="tagline" name="company_tagline" value="{{ cid.company_tagline|default:'' }}" required>
+                        <div class="invalid-feedback">Tagline is required.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="website" class="form-label">Corporate Website</label>
+                        <input type="url" class="form-control" id="website" name="website" value="{{ cid.website|default:''}}" required>
+                        <div class="invalid-feedback">Please enter a valid website URL.</div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="companySize" class="form-label">Company Size</label>
+                        <select class="form-select" id="companySize" name="company_size" required>
+                            <option  disabled>Choose Employees...</option>
+                            <option value="1-10">1-10 employees</option>
+                            <option value="11-50">11-50 employees</option>
+                            <option value="51-200"selected>51-200 employees</option>
+                            <option value="201-500">201-500 employees</option>
+                            <option value="501-1000">500-1000 employees</option>
+                            <option value="1001+">1000+ employees</option>
+                        </select>
+                        <div class="invalid-feedback">Please select company size.</div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="founded" class="form-label">Founded Year</label>
+                        <input type="number" class="form-control" id="founded" name="founded_year" value="{{ cid.founded_year|default:'' }}" min="1800" max="2026" required>
+                        <div class="invalid-feedback">Please enter a valid founded year.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="industry" class="form-label">Industry</label>
+                        <select class="form-select" id="industry" name="industry_type" required>
+                            <option disabled selected >Select Industry</option>
+                            <option value="Software">Software</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Education">Education</option>
+                            <option value="other..">other..</option>
+                        </select>
+                        <div class="invalid-feedback">Please select industry.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="hq" class="form-label">HQ Location</label>
+                        <input type="text" class="form-control" id="hq" name="hq_location" value="{{ cid.hq_location|default:'' }}" required>
+                        <div class="invalid-feedback">Please specify headquarter location.</div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="about" class="form-label">About Description</label>
+                        <textarea class="form-control" id="about" rows="5" name="about_summary" required>{{ cid.about_summary|default:'' }}</textarea>
+                        <div class="invalid-feedback">About description is required.</div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4 border-top pt-3 border-secondary">
+                    <a href="{% url 'company:edit_profile' %}" class="btn btn-ghost">Cancel</a>
+                    <input type="submit" class="btn btn-primary rounded-pill px-4" value="Save Changes">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+    <!-- <script src="../js/main.js"></script> -->
+    <!-- <script src="{% static 'company/js/forms.js' %}"></script> -->
+    <!-- <script src="../js/company.js"></script> -->
+    <script>
+        // File upload previews simulation
+        const logoUpload = document.getElementById('logoUpload');
+        const logoPreview = document.getElementById('logoPreview');
+        logoUpload.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                logoPreview.src = URL.createObjectURL(this.files[0]);
+                showToast('Logo updated successfully.');
+            }
+        });
+
+        const coverUpload = document.getElementById('coverUpload');
+        const coverPreview = document.getElementById('coverImagePreview');
+        coverUpload.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                coverPreview.src = URL.createObjectURL(this.files[0]);
+                showToast('Cover photo updated successfully.');
+            }
+        });
+    </script>
+</body>
+</html>
+{% endblock%}

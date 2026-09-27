@@ -1,0 +1,24 @@
+select * from tablename where id = 1;
+
+return result = 1
+
+get(): get return only single object
+
+it will throw an error
+
+select * from tablename where subject = "python"
+
+return result = 1 or many
+
+filter(): filter which is return querylist
+
+[]
+
+if there is no data match with condition it return blank list
+-------------------------------------
+onchange="this.form.submit()" ka matlab hai:
+
+👉 Jab input ki value change ho jaye aur user input box se 
+bahar click kare (focus hat jaye), tab form automatically submit ho jayega.
+hum jab iska use karenge to submit butten pe clikh karne ki jaruart nhi hai hun seach karne ke bad khi
+bhi click karen ge to ye search ho jayega

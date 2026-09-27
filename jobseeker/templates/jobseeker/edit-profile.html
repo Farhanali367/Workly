@@ -1,0 +1,107 @@
+{% extends 'jobseeker/dashboard.html' %}
+
+{% block maincontent %}
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Topbar Mobile -->
+    <div class="mobile-topbar d-lg-none">
+        <a class="sidebar-brand text-decoration-none fw-bold" href="#">
+            <i class="bi bi-briefcase-fill text-primary"></i> SkillBridge
+        </a>
+        <button class="menu-toggle" id="openSidebar"><i class="bi bi-list"></i></button>
+    </div>
+
+    <!-- Header -->
+    <div class="dash-topbar slide-up">
+        <div class="dash-greeting">
+            <h3 class="fw-bold mb-1 text-dark">Edit Profile</h3>
+            <p class="text-muted mb-0">Keep your professional identity up to date.</p>
+        </div>
+    </div>
+
+    <!-- Form Card -->
+    <div class="card border-0 shadow-sm p-4 slide-up delay-100">
+        <form class="needs-validation" data-redirect="profile.html" method="post" action="{% url 'jobseeker:edit_profile' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <label for="firstName" class="form-label">Email</label>
+                    <input type="text" class="form-control" id="firstName"  value="{{uid}}" readonly disabled>
+                    <!-- <div class="invalid-feedback">Please enter first name.</div> -->
+                </div>
+                <div class="col-md-4">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="firstName" name="f_name" value="{{jid.f_name|default:'Please enter first name.'}}" required>
+                    <!-- <div class="invalid-feedback">Please enter first name.</div> -->
+                </div>
+                <div class="col-md-4">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="l_name" value="{{jid.l_name|default:'Please enter last name.'}}" required>
+                    <!-- <div class="invalid-feedback">Please enter last name.</div> -->
+                </div>
+                <div class="col-12">
+                    <label for="headline" class="form-label">Professional Headline</label>
+                    <input type="text" class="form-control" id="headline" name="p_h" value="{{jid.p_h|default:''}}" required>
+                    <!-- <div class="invalid-feedback">Please enter a headline.</div> -->
+                </div>
+                <div class="col-md-6">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" class="form-control" id="location" name="location" value="{{jid.location|default:''}}" required>
+                    <!-- <div class="invalid-feedback">Please enter location.</div> -->
+                </div>
+                <div class="col-md-6">
+                    <label for="website" class="form-label">Personal Website</label>
+                    <input type="url" class="form-control" id="website" name="web" placeholder="https://alexcarter.dev">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="website" class="form-label">Upload-Image</label>
+                    <input type="file" class="form-control" id="website" name="profile_pic" placeholder="https://alexcarter.dev">
+                </div>
+                <div class="col-md-4">
+                    <label for="number" class="form-label">Phone number</label>
+                    <input type="tel" class="form-control" id="number" name="number" value="{{jid.number}}" >
+                </div>
+                <div class="col-md-5">
+                    <label for="skills" class="form-label">Skills</label>
+                    <textarea type="text" class="form-control" id="website" name="skills" >{{jid.skills}}</textarea>
+                </div>
+                
+                <div class="col-12">
+                    <label for="aboutText" class="form-label">About Summary</label>
+                    <textarea class="form-control" id="aboutText" rows="5" name="about_summary">{{jid.about_summary|default:''}}</textarea>
+                    <!-- <div class="invalid-feedback">Please enter an about summary.</div> -->
+                </div>
+                <div><h3>Education Details</h3></div>
+                 <div class="col-md-7">
+                    <label for="text" class="form-label">Institute Name</label>
+                    <input type="text" class="form-control" id="text" name="Institute" value="{{jid.Institute|default:''}}" >
+                </div>
+                <div class="col-md-6">
+                    <label for="text" class="form-label">Degree</label>
+                    <input type="text" class="form-control"  name="degree" value="{{jid.degree|default:''}}" >
+                </div>
+                <div class="col-md-2">
+                    <label for="year" class="form-label">Start Year</label>
+                    <input type="number" class="form-control" name="s_year" value="{{jid.s_year|default:''}}" >
+                </div>
+                <div class="col-md-2">
+                    <label for="date" class="form-label">End Year</label>
+                    <input type="number" class="form-control" name="e_year" value="{{jid.e_year|default:''}}" >
+                </div>
+                <div class="col-md-2">
+                    <label for="percentage" class="form-label">Percentage</label>
+                    <input type="number"  class="form-control" step="0.01" max="100" min="0" name="percentage" value="{{jid.percentage|default:''}}" >
+                </div>
+
+               
+            </div>
+
+            <div class="d-flex gap-2">
+                <input type="submit" class="btn btn-primary rounded-pill px-4" value="Save Changes">
+                <a href="{% url 'jobseeker:edit_profile' %}" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

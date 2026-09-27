@@ -1,0 +1,476 @@
+{% extends 'jobseeker/dashboard.html' %}
+{% block css %}
+<style>
+    :root {
+        --primary-color: #0A66C2;
+        --bg-main: #F3F2EF;
+    }
+
+    body {
+        padding-top: 0;
+        background-color: var(--bg-main);
+    }
+
+    .sidebar {
+        width: 280px;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: #fff;
+        border-right: 1px solid var(--border-light);
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .main-content {
+        margin-left: var(--sidebar-width);
+        padding: 2rem;
+        min-height: 100vh;
+        transition: var(--transition-base);
+    }
+    @media (max-width: 992px) {
+        .sidebar {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.show {
+            transform: translateX(0);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .main-content {
+            margin-left: 0;
+            padding: 1.25rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .kanban-board {
+            flex-wrap: nowrap;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .main-content {
+            padding: 1rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .dash-topbar {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    .nav-link-sidebar {
+        color: #666;
+        padding: 0.75rem 1.25rem;
+        border-radius: var(--radius-md);
+        margin: 0.25rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .nav-link-sidebar:hover,
+    .nav-link-sidebar.active {
+        background-color: var(--bg-active);
+        color: var(--primary);
+    }
+
+    .search-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+    }
+
+    .jobs-list-panel {
+        width: 35%;
+        min-width: 350px;
+        overflow-y: auto;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 15px;
+    }
+
+    .job-detail-panel {
+        width: 100%;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 25px;
+    }
+
+    .job-card {
+        transition: all .3s ease;
+        border-radius: 14px;
+    }
+
+    .job-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, .08) !important;
+    }
+
+    .bookmark-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    @media(max-width:992px) {
+        .search-container {
+            flex-direction: column;
+        }
+
+        .jobs-list-panel,
+        .job-detail-panel {
+            width: 100%;
+        }
+
+        /* .bookmark-btn:hover */
+    }
+</style>
+{% endblock %}
+{% block maincontent %}
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Mobile Top Bar -->
+    <div class="d-flex justify-content-between align-items-center mb-3 d-lg-none">
+        <h4 class="fw-bold mb-0">Job Search</h4>
+        <button class="btn btn-light border" id="openSidebar"><i class="bi bi-list fs-4"></i></button>
+    </div>
+
+    <!-- Search input deck -->
+    <div class="card border-0 shadow-sm mb-4 slide-up">
+        <div class="card-body p-3">
+            <form class="row g-2" id="jobSearchForm" action="{% url 'jobseeker:search' %}" method="get">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0"><i
+                                class="bi bi-search text-muted"></i></span>
+                        <input type="text" class="form-control border-start-0"
+                            placeholder="Job title, skills, keywords... " name="skills">
+                        <!-- onchange="this.form.submit()" -->
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0"><i
+                                class="bi bi-geo-alt text-muted"></i></span>
+                        <input type="text" class="form-control border-start-0" placeholder="Location, remote..."
+                            name="location">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <input type="submit" class="btn btn-primary w-100 justify-content-center" value="Search">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Search Container -->
+    <div class="container-fluid mt-4">
+        <div class="row g-4">
+
+            <!-- LEFT FILTERS -->
+            <div class="col-lg-3 d-none d-lg-block">
+
+                <div class="card border-0 shadow-sm sticky-top" style="top:100px;">
+
+                    <div class="card-header bg-white">
+                        <h6 class="fw-bold mb-0">Filters</h6>
+                    </div>
+                    <form action="{% url 'jobseeker:search' %}" method="get">
+                        <div class="card-body">
+
+                            <h6 class="fw-semibold mb-3">Date Posted</h6>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="date" checked>
+                                <label class="form-check-label">Any Time</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="date">
+                                <label class="form-check-label">Past 24 Hours</label>
+                            </div>
+
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="radio" name="date">
+                                <label class="form-check-label">Past Week</label>
+                            </div>
+                            {% if job_types|length != 0 %}
+                            <hr>
+                            <h6 class="fw-semibold mb-3">Job Type</h6>
+                            {% endif %}
+
+                            {% for j_t in job_types %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="job_tipe" value="{{j_t}}"
+                                        onchange="this.form.submit()" {% if j_t in selected_job_type %} checked {% endif %}>
+                                    <label class="form-check-label">{{j_t}}</label>
+                                </div>
+                            {% endfor %}
+
+                            <hr>
+
+                            <h6 class="fw-semibold mb-3">Experience</h6>
+
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="fresher" value="Fresher"
+                                    onchange="this.form.submit()">
+                                <label class="form-check-label">Fresher</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="junior" value="Junior (1-3 yrs)"
+                                    onchange="this.form.submit()">
+                                <label class="form-check-label">Junior (1-3 yrs)</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="mid_level"
+                                    value="Mid-level (3-5 yrs)" onchange="this.form.submit()">
+                                <label class="form-check-label">Mid-level (3-5 yrs)</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="senior" value="Senior (5+ yrs)"
+                                    onchange="this.form.submit()">
+                                <label class="form-check-label">Senior (5+ yrs)</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="lead"
+                                    value="Lead / Architect (8+ yrs)" onchange="this.form.submit()">
+                                <label class="form-check-label">Lead / Architect (8+ yrs)</label>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- MIDDLE JOB LIST -->
+            <div class="col-lg-9">
+
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">
+                        {{ jobs|length }} Jobs Found
+                    </h5>
+                </div>
+
+                {% for job in jobs %}
+
+
+                <div class="card border-0 shadow-sm mb-3 job-card">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-start">
+
+                            <div>
+
+                                <span style="color: black;"><b><h5>{{job.job_title}}</h5></b></span>
+
+                                <p class="text-muted mb-1">
+                                    {{job.company_fk.name}}
+                                </p>
+
+                                <small class="text-muted d-block mb-3">
+                                    <i class="bi bi-geo-alt"></i>
+                                    {{job.location}}
+                                </small>
+
+                            </div>
+                            <!-- -----------jingalala---------- -->
+
+                            <!-- <form action="{% url 'jobseeker:Save_job' pk=job.id %}" method="post"> -->
+                                <!-- {% csrf_token %} -->
+                                <!-- <input type="hidden" name="status" value="Active"> -->
+                                <!-- <button type="submit" class="btn btn-light border bookmark-btn"> -->
+                                <meta name="csrf-token" content="{{ csrf_token }}">
+                                <button type="button" class="btn btn-light border bookmark-btn" data-job-id="{{job.id}}">
+                                    
+                                    {% if job.id in saved_job_ids %}
+                                        <i class="bi bi-bookmark-fill text-primary fs-5"></i>
+                                    {% else %}
+                                       <i class="bi bi-bookmark fs-5"></i>
+                                    {% endif %}
+
+                                </button>
+                            <!-- </form> -->
+
+                        </div>
+
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+
+                            <span class="badge bg-light text-dark border">
+                                {{job.employment_type}}
+                            </span>
+
+                            <span class="badge bg-light text-dark border">
+                                ₹ {{job.min_salary}} - ₹ {{job.max_salary}}
+                            </span>
+
+                        </div>
+
+                        <p class="text-muted small mb-3">
+                            {{job.job_discription|truncatewords:20}}
+                        </p>
+
+                        <div class="d-flex justify-content-start align-items-center gap-2 flex-nowrap">
+                            <form action="{% url 'jobseeker:job_detail' %}" method="post" class="m-0">
+                                {% csrf_token %}
+                                <input type="hidden" name="pk" value="{{job.id}}">
+                                <button class="btn btn-primary btn-sm">View Details</button>
+                            </form>
+
+                            <form action="{% url 'jobseeker:applye_jobs' %}" method="post" class="m-0">
+                                {% csrf_token %}
+                                <input type="hidden" name="page" value="job_search">
+                                <input type="hidden" name="pk" value="{{job.id}}">
+
+                                <button class="btn btn-primary btn-sm"><i class="bi bi-send"></i>Apply</button>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% empty %}
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5>No Jobs Found</h5>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Apply Confirmation Modal -->
+<!-- <div class="modal fade" id="applyConfirmModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-light border-bottom p-4">
+                <h5 class="modal-title fw-bold">Submit Job Application?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="text-muted text-sm mb-3"> We will transmit your default profile and resume portfolio to the
+                    recruiter.</p>
+                <div class="bg-light p-3 rounded d-flex align-items-center gap-3">
+                    <i class="bi bi-file-earmark-pdf-fill text-danger fs-3"></i>
+                    <div>
+                        <input type="hidden" id="job_id">
+                        <small class="text-muted text-xs">{{ rid.resume.name|cut:"jobseeker/resume/"|default:'please upload resume.pdf !!!' }}</small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light border-top p-4 d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                {% if rid.resume %}
+                <form id="applyForm" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">
+                        Confirm Application
+                    </button>
+                </form>
+                {% else %}
+                <a href="{% url 'jobseeker:resume_build' %}">Create Resume.</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- Bootstrap Bundle -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+<script>
+
+const csrfToken = document.querySelector(
+    'meta[name="csrf-token"]'
+).content;
+
+document.querySelectorAll('.bookmark-btn').forEach(btn => {
+
+    btn.addEventListener('click', async function () {
+
+        const jobId = this.dataset.jobId;
+        const icon = this.querySelector('i');
+
+        try {
+
+            const response = await fetch(
+                `/jobseeker/Save_job/${jobId}/`,
+                {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": csrfToken
+                    }
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.status === "saved") {
+
+                icon.classList.remove('bi-bookmark');
+                icon.classList.add(
+                    'bi-bookmark-fill',
+                    'text-primary'
+                );
+
+            } else if (data.status === "removed") {
+
+                icon.classList.remove(
+                    'bi-bookmark-fill',
+                    'text-primary'
+                );
+
+                icon.classList.add('bi-bookmark');
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+
+    });
+
+});
+
+</script>
+{% endblock %}

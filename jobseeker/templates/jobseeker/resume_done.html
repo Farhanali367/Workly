@@ -1,0 +1,268 @@
+{% extends 'jobseeker/dashboard.html' %}
+
+{% block css %}
+<style>
+    body {
+        background: #f4f7fc;
+        font-family: Segoe UI, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .resume-container {
+        width: 100%;
+    }
+
+    .resume-wrapper {
+        width: 75%;
+        margin-left: 22%;
+        padding: 30px;
+        box-sizing: border-box;
+    }
+
+    .resume-card {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .resume-header {
+        text-align: center;
+        border-bottom: 2px solid #e9ecef;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+    }
+
+    .resume-header h1 {
+        margin: 0;
+        color: #0d6efd;
+    }
+
+    .resume-header p {
+        margin-top: 10px;
+        color: #666;
+    }
+
+    .resume-header p.links {
+        margin-top: 5px;
+        color: #666;
+    }
+
+    .section {
+        margin-bottom: 30px;
+    }
+
+    .section h3 {
+        color: #0d6efd;
+        border-bottom: 2px solid #e9ecef;
+        padding-bottom: 8px;
+        margin-bottom: 15px;
+    }
+
+    .section h4 {
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .section p {
+        color: #444;
+    }
+
+    .summary-text,
+    .project-text {
+        line-height: 1.8;
+    }
+
+    .muted {
+        color: #666;
+    }
+
+    .info-box {
+        background: #eef4ff;
+        padding: 15px;
+        border-radius: 10px;
+        color: #333;
+    }
+
+    .resume-actions {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        padding-top: 15px;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .resume-action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        color: #0d6efd;
+        background: transparent;
+        border: 1.5px solid #0d6efd;
+        transition: all 0.3s ease;
+    }
+
+    .resume-action-btn.download {
+        color: #198754;
+        border-color: #198754;
+    }
+
+    .resume-action-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 18px rgba(13, 110, 253, 0.15);
+        background: #0d6efd;
+        color: #fff;
+    }
+
+    .resume-action-btn.download:hover {
+        background: #198754;
+        color: #fff;
+        box-shadow: 0 8px 18px rgba(25, 135, 84, 0.15);
+    }
+
+    @media (hover: hover) {
+        .resume-action-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+        }
+    }
+
+    @media (max-width: 992px) {
+        .sidebar {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.show {
+            transform: translateX(0);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .main-content {
+            margin-left: 0;
+            padding: 1.25rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .kanban-board {
+            flex-wrap: nowrap;
+        }
+
+        .resume-wrapper {
+            width: 100%;
+            margin-left: 0;
+            padding: 20px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .main-content {
+            padding: 1rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .dash-topbar {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .resume-card {
+            padding: 24px;
+        }
+
+        .resume-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .resume-action-btn {
+            justify-content: center;
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block maincontent %}
+<div class="resume-container">
+    <div class="resume-wrapper">
+        <div class="resume-card">
+
+            <div class="resume-header">
+                <h1>{{ rid.full_name }}</h1>
+                <p>
+                    📧 {{ rid.email }} |
+                    📞 {{ rid.number }} |
+                    📍 {{ rid.location }}
+                </p>
+                <p class="links">
+                    🔗 {{ rid.linkedin }} |
+                    🌐 {{ rid.pot_web }}
+                </p>
+            </div>
+
+            <div class="section">
+                <h3>Professional Summary</h3>
+                <p class="summary-text">{{ rid.summary }}</p>
+            </div>
+
+            <div class="section">
+                <h3>Education</h3>
+                <h4>{{ rid.degree }}</h4>
+                <p class="muted">{{ rid.Institute }}</p>
+                <p>
+                    Passing Year : <strong>{{ rid.p_year }}</strong><br>
+                    Percentage : <strong>{{ rid.percentage }}%</strong>
+                </p>
+            </div>
+
+            {% if rid.job_tital %}
+            <div class="section">
+                <h3>Work Experience</h3>
+                <h4>{{ rid.job_tital }}</h4>
+                <p class="muted">{{ rid.w_company_name }}</p>
+                <p class="project-text">{{ rid.job_description }}</p>
+            </div>
+            {% endif %}
+
+            <div class="section">
+                <h3>Skills</h3>
+                <p class="info-box">{{ rid.skills }}</p>
+            </div>
+
+            <div class="section">
+                <h3>Projects</h3>
+                <p class="project-text">{{ rid.Project_detail }}</p>
+            </div>
+
+            <div class="section" style="margin-bottom:20px;">
+                <h3>Languages</h3>
+                <p class="info-box">{{ rid.Language }}</p>
+            </div>
+
+            <div class="resume-actions">
+                <a href="{% url 'jobseeker:resume_build' %}" class="resume-action-btn">
+                    ✏️ Edit Resume
+                </a>
+
+                <a href="{% url 'jobseeker:download_resume' %}" class="resume-action-btn download">
+                    ⬇️ Download Resume
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

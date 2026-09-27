@@ -1,0 +1,30 @@
+<a href="javascript:history.back()" class="back-btn">
+    <i class="bi bi-arrow-left"></i> Back
+</a>
+
+____________
+class
+____________
+<style>
+.back-btn{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    text-decoration: none;
+    color: #0d6efd;
+    background: transparent;
+    border: 1.5px solid #0d6efd;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover{
+    background: #0d6efd;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(13,110,253,.18);
+}
+</style>
