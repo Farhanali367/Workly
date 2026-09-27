@@ -1,0 +1,238 @@
+/* ================================================================
+   SKILL BRIDGE — Dark Mode Theme Overrides
+   Vibrant, premium dark palette with matching variables and element styling
+   ================================================================ */
+
+[data-theme="dark"] {
+    /* Neutrals Overrides */
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    --text-light: #64748B;
+    --border-color: #334155;
+    --border-light: #1E293B;
+    --divider: #1E293B;
+
+    /* Backgrounds Overrides */
+    --bg-main: #0F172A;
+    --bg-card: #1E293B;
+    --bg-hover: #334155;
+    --bg-active: rgba(10, 102, 194, 0.2);
+    --bg-elevated: #1E293B;
+
+    /* Glassmorphism Overrides */
+    --glass-bg: rgba(15, 23, 42, 0.7);
+    --glass-bg-strong: rgba(15, 23, 42, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Global Elements Overrides ── */
+[data-theme="dark"] body {
+    background-color: var(--bg-main) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .card {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .card-header {
+    border-bottom-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .navbar-glass {
+    background: var(--glass-bg-strong) !important;
+    border-bottom-color: var(--border-light) !important;
+}
+
+[data-theme="dark"] .navbar-glass .nav-link {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .navbar-glass .nav-link:hover {
+    color: var(--primary) !important;
+    background: var(--bg-active) !important;
+}
+
+[data-theme="dark"] .navbar-glass .nav-link.active {
+    color: var(--primary) !important;
+}
+
+/* ── Form Controls Overrides ── */
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+    background-color: #0F172A !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.25) !important;
+}
+
+[data-theme="dark"] .form-label {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .input-group-text {
+    background-color: #0F172A !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-muted) !important;
+}
+
+/* ── Standard CSS classes to override ── */
+[data-theme="dark"] .bg-white {
+    background-color: var(--bg-card) !important;
+}
+
+[data-theme="dark"] .text-dark {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .text-muted {
+    color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] .border {
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .border-bottom {
+    border-bottom-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .border-top {
+    border-top-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .bg-light {
+    background-color: #0F172A !important;
+}
+
+[data-theme="dark"] .btn-light {
+    background-color: #334155 !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .btn-light:hover {
+    background-color: #475569 !important;
+}
+
+/* ── Dropdowns & Modals ── */
+[data-theme="dark"] .dropdown-menu {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .dropdown-item {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .dropdown-item:hover {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .modal-content {
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .modal-header,
+[data-theme="dark"] .modal-footer {
+    border-color: var(--border-color) !important;
+}
+
+/* ── Tables Overrides ── */
+[data-theme="dark"] .table-modern thead th {
+    background-color: #0F172A !important;
+    color: var(--text-secondary) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .table-modern tbody td {
+    color: var(--text-secondary) !important;
+    border-color: var(--border-light) !important;
+}
+
+[data-theme="dark"] .table-modern tbody tr:hover {
+    background-color: var(--bg-hover) !important;
+}
+
+/* ── Timeline & Stepper Overrides ── */
+[data-theme="dark"] .timeline::before {
+    background-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .timeline-item::before {
+    border-color: var(--bg-card) !important;
+    box-shadow: 0 0 0 3px var(--border-color) !important;
+}
+
+[data-theme="dark"] .progress-stepper .step::before {
+    background-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .progress-stepper .step-dot {
+    background-color: #0F172A !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-muted) !important;
+}
+
+/* ── Hero Search Overrides ── */
+[data-theme="dark"] .hero-search-wrapper {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .hero-search-wrapper input {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .hero-search-wrapper .divider {
+    background-color: var(--border-color) !important;
+}
+
+/* ── Component specific corrections ── */
+[data-theme="dark"] .nav-tabs-modern {
+    border-bottom-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .nav-tabs-modern .nav-link {
+    color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] .nav-tabs-modern .nav-link:hover {
+    color: var(--primary) !important;
+}
+
+[data-theme="dark"] .pagination-modern .page-link {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .pagination-modern .page-link:hover {
+    background-color: var(--bg-hover) !important;
+}
+
+[data-theme="dark"] .list-group-item {
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .list-group-item:hover {
+    background-color: var(--bg-hover) !important;
+}
+
+[data-theme="dark"] .toast {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
