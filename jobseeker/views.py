@@ -14,12 +14,56 @@ import re
 
 @loginvalidate
 def dashboard(request):
-    con={
-        'jid':request.jid,
-        'uid':request.uid,
-        'name':"dashboard"
+    jid = request.jid
+    uid = request.uid
+
+    profile_fields = [
+        'f_name',
+        'l_name',
+        'number',
+        'skills',
+        'p_h',
+        'location',
+        'web',
+        'about_summary',
+        'Institute',
+        'degree',
+        's_year',
+        'e_year',
+        'percentage',
+        'profile_pic',
+    ]
+
+    completed_fields = 0
+
+    for field in profile_fields:
+        value = getattr(jid, field, None)
+
+        if value is not None and str(value).strip() != "":
+            completed_fields += 1
+
+    profile_completion = round(
+        (completed_fields / len(profile_fields)) * 100
+    )
+
+    remaining_fields = len(profile_fields) - completed_fields
+
+    if profile_completion == 100:
+        profile_message = "Your profile is complete! You're ready to stand out."
+    elif remaining_fields == 1:
+        profile_message = "You are 1 step away from completing your profile."
+    else:
+        profile_message = f"You are {remaining_fields} steps away from completing your profile."
+
+    con = {
+        'jid': jid,
+        'uid': uid,
+        'name': "dashboard",
+        'profile_completion': profile_completion,
+        'profile_message': profile_message,
     }
-    return render(request,"jobseeker/dashboard.html",con)
+
+    return render(request, "jobseeker/dashboard.html", con)
 
 @loginvalidate
 def profile(request):
